@@ -14,6 +14,21 @@
     --recess:  inset 0 1px 2px rgba(26,22,18,0.06), inset 0 0 0 1px rgba(26,22,18,0.04);
     --raised:  inset 0 0 0 1px rgba(255,255,255,0.8), 0 0 0 1px rgba(26,22,18,0.05), 0 1px 2px rgba(26,22,18,0.07);
   }
+  body[data-theme="dark"] {
+    color-scheme: dark;
+    --paper:    #15120e;
+    --paper-2:  #1e1a15;
+    --paper-3:  #26201a;
+    --ink:      #f1eadf;
+    --ink-2:    #d0c1ad;
+    --ink-soft: #a79b8c;
+    --accent:   #c9b08b;
+    --accent-2: #f1eadf;
+    --edge:    inset 0 0 0 1px rgba(255,255,255,0.05), 0 0 0 1px rgba(255,255,255,0.03);
+    --edge-lg: inset 0 0 0 1px rgba(255,255,255,0.07), 0 0 0 1px rgba(255,255,255,0.04), 0 8px 28px rgba(0,0,0,0.32);
+    --recess:  inset 0 1px 2px rgba(0,0,0,0.28), inset 0 0 0 1px rgba(255,255,255,0.04);
+    --raised:  inset 0 0 0 1px rgba(255,255,255,0.07), 0 0 0 1px rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.26);
+  }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; height: 100%; background: var(--paper); color: var(--ink); }
   body {
@@ -82,6 +97,9 @@
     padding: 0 28px; z-index: 30; pointer-events: none;
   }
   .top > * { pointer-events: auto; }
+  .top-actions {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
   .top .window-pick {
     display: inline-flex; gap: 0; padding: 4px;
     background: var(--paper-2); border-radius: 999px;
@@ -104,6 +122,19 @@
     box-shadow: var(--raised);
     transition: transform 160ms ease;
   }
+  .theme-btn {
+    width: 28px; height: 28px; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--paper); border: 0; color: var(--ink);
+    border-radius: 999px; cursor: pointer; box-shadow: var(--raised);
+    transition: transform 160ms ease;
+  }
+  .theme-btn:hover { transform: translateY(-1px); }
+  .theme-btn:active { transform: translateY(0); }
+  .theme-icon { width: 16px; height: 16px; display: block; }
+  .theme-btn .theme-dark { display: none; }
+  body[data-theme="dark"] .theme-btn .theme-light { display: none; }
+  body[data-theme="dark"] .theme-btn .theme-dark { display: block; }
   .menu-btn:hover { transform: translateY(-1px); }
   .menu-btn:active { transform: translateY(0); }
   /* Compact top bar on mobile - the time-window pill goes from
@@ -114,6 +145,9 @@
     .top .window-pick button {
       font-size: 8.5px; padding: 6px 10px; letter-spacing: 0.12em;
     }
+    .top-actions { gap: 6px; }
+    .theme-btn { width: 22px; height: 22px; }
+    .theme-icon { width: 14px; height: 14px; }
     .menu-btn { font-size: 9px; padding: 6px 11px 5px; letter-spacing: 0.14em; }
     .return-to-atlas { top: 10px; left: 10px; padding: 5px 10px; font-size: 8.5px; }
   }

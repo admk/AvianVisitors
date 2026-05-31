@@ -7,9 +7,9 @@
 <meta name="description" content="A live bird collage from your window.">
 <link rel="icon" type="image/png" href="./favicon.png">
 <link rel="apple-touch-icon" href="./favicon.png">
-<link rel="stylesheet" href="./styles.css">
+<link rel="stylesheet" href="./styles.css?v=theme-2">
 </head>
-<body class="av-local">
+<body class="av-local" data-theme="light">
 <!-- Pill in the top-left slot, only visible on admin overlays
      (body.admin-on); CSS in styles.css hides it everywhere else.
      href="/" returns to the collage view via a full reload, which is
@@ -29,7 +29,18 @@
     <button data-h="168" type="button">7D</button>
     <button data-h="1000000" type="button">ALL</button>
   </div>
-  <button class="menu-btn" id="menuBtn">menu</button>
+  <div class="top-actions">
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="toggle dark mode" aria-pressed="false">
+      <svg class="theme-icon theme-light" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="8" cy="8" r="2.7"/>
+        <path d="M8 1.8V3.2M8 12.8V14.2M1.8 8H3.2M12.8 8H14.2M3 3L4 4M12 12L13 13M13 3L12 4M4 12L3 13"/>
+      </svg>
+      <svg class="theme-icon theme-dark" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 2 A4 4 0 0 0 14 8 A6 6 0 1 1 8 2 Z"/>
+      </svg>
+    </button>
+    <button class="menu-btn" id="menuBtn">menu</button>
+  </div>
 </header>
 
 <aside id="menu-dd" aria-hidden="true">
@@ -210,6 +221,6 @@
   </div>
 </section>
 
-<script src="./apt.js"></script>
+<script src="./apt.js?v=theme-2"></script>
 </body>
 </html>

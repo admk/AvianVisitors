@@ -106,6 +106,27 @@
   });
 
   function syncAllPills() { syncPill(slider); syncPill(winPick); if (atlasSortEl) syncPill(atlasSortEl); }
+  // ---- Theme toggle ----
+  var themeBtn = document.getElementById('themeBtn');
+  var themeKey = 'bird:theme';
+  function readTheme() {
+    try { return localStorage.getItem(themeKey) || 'light'; } catch (e) { return 'light'; }
+  }
+  function writeTheme(v) {
+    try { localStorage.setItem(themeKey, v); } catch (e) {}
+  }
+  function applyTheme(theme) {
+    document.body.setAttribute('data-theme', theme);
+    if (themeBtn) themeBtn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+  }
+  applyTheme(readTheme());
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      var next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      writeTheme(next);
+      applyTheme(next);
+    });
+  }
   // The buttons size from text content; wait for fonts so width is correct.
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(syncAllPills);
@@ -426,7 +447,7 @@
       // &v=IMG_VERSION busts CF edge cache when we re-render any species.
       var img = './avian/api/cutout.php?sci=' + encodeURIComponent(s.sci) +
         (s.com ? '&com=' + encodeURIComponent(s.com) : '') +
-        '&v=' + IMG_VERSION;
+        '&pose=2&v=' + IMG_VERSION;
       var btn = document.createElement('button');
       btn.className = 'gtile';
       btn.type = 'button';

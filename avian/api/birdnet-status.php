@@ -23,6 +23,9 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
+$TZ = getenv('TZ');
+if ($TZ) @date_default_timezone_set($TZ);
+
 if (getenv('AV_REQUIRE_AUTH') === '1' && empty($_SERVER['HTTP_AUTHORIZATION'])) {
     http_response_code(401);
     echo json_encode(['error' => 'unauthorized']);
@@ -40,6 +43,7 @@ $BIRDSONGS_DIR = dirname(__DIR__, 3) . '/BirdSongs';
 $DB_PATH       = "$BIRDNETPI_DIR/scripts/birds.db";
 $CONF_PATH     = "$BIRDNETPI_DIR/birdnet.conf";
 $STREAM_DIR    = "$BIRDSONGS_DIR/StreamData";
+define('AV_DOCKER_RUNTIME', getenv('AV_DOCKER') === '1');
 
 function shellout(string $cmd): string {
     // Always merge stderr so a broken command shows what failed.
@@ -105,6 +109,8 @@ function read_temp(): ?float {
 }
 
 function read_audio(): array {
+    if (AV_DOCKER_RUNTIME) return ['arecord_l' => ['RTSP stream microphone'], 'usb' => []];
+
     // Read /proc/asound/cards directly - works even when the capture
     // device is busy (arecord -l would fail with "no soundcards" if
     // birdnet_recording holds the mic). The file is two lines per card.
@@ -170,6 +176,7 @@ function read_conf_summary(string $p): array {
             if (in_array($m[1], $keys, true)) {
                 $v = trim($m[2]);
                 if (strlen($v) >= 2 && $v[0] === '"' && substr($v, -1) === '"') $v = substr($v, 1, -1);
+                if ($m[1] === 'RTSP_STREAM') $v = preg_replace('#//[^/@]+@#', '//***:***@', $v) ?? '[redacted]';
                 $vals[$m[1]] = $v;
             }
         }
@@ -196,6 +203,22 @@ const ALLOWED_UNITS = [
 ];
 
 function services_status(): array {
+    if (AV_DOCKER_RUNTIME) {
+        $heartbeat = function (string $name): array {
+            $path = "/runstate/$name.heartbeat";
+            $age = is_file($path) ? time() - (int)filemtime($path) : null;
+            return ['active' => ($age !== null && $age < 30) ? 'active' : 'inactive', 'enabled' => 'docker compose', 'since' => $age === null ? null : $age . 's heartbeat age'];
+        };
+        return [
+            'app' => ['active' => 'active', 'enabled' => 'single docker container', 'since' => null],
+            'nginx' => ['active' => 'active', 'enabled' => 'single docker container', 'since' => null],
+            'php-fpm' => ['active' => 'active', 'enabled' => 'single docker container', 'since' => null],
+            'icecast2' => ['active' => 'active', 'enabled' => 'single docker container', 'since' => null],
+            'birdnet_recording' => $heartbeat('birdnet_recording'),
+            'birdnet_analysis' => $heartbeat('birdnet_analysis'),
+        ];
+    }
+
     $out = [];
     foreach (ALLOWED_UNITS as $u) {
         $state = trim(shellout('systemctl is-active ' . escapeshellarg($u)));
@@ -222,6 +245,15 @@ function logs_for(string $unit, int $lines): array {
         return ['error' => 'unit not allowed', 'allowed' => ALLOWED_UNITS];
     }
     $lines = max(10, min(500, $lines));
+    if (AV_DOCKER_RUNTIME) {
+        $file = "/logs/$unit.log";
+        $text = is_readable($file) ? implode("\n", array_slice(file($file, FILE_IGNORE_NEW_LINES), -$lines)) : 'No Docker log file has been written for this service yet.';
+        if ($unit === 'birdnet_recording') {
+            $text = trim(preg_replace('/^\s*(\[h264 @ |Last message repeated|decode_slice_header error|no frame!).*$/m', '', $text) ?? '');
+            if ($text === '') $text = 'Recording is running; no recent recording warnings.';
+        }
+        return ['unit' => $unit, 'lines' => $lines, 'text' => $text];
+    }
     $out = shellout(
         'sudo /bin/journalctl -u ' . escapeshellarg($unit) .
         ' --no-pager -n ' . $lines . ' -o short-iso'
@@ -281,6 +313,11 @@ switch ($action) {
             echo json_encode(['error' => 'unit not allowed', 'allowed' => ALLOWED_UNITS]);
             break;
         }
+        if (AV_DOCKER_RUNTIME) {
+            http_response_code(409);
+            echo json_encode(['unit' => $unit, 'ok' => false, 'error' => 'restart the Docker container with docker compose']);
+            break;
+        }
         // Sudoers rule (dropped in by install_services.sh):
         //   caddy ALL=(root) NOPASSWD: /bin/systemctl restart birdnet_*, ...
         $rc = 0; $out = [];
@@ -300,6 +337,11 @@ switch ($action) {
         $key_units = ['birdnet_recording', 'birdnet_analysis'];
         $recent_logs = [];
         foreach ($key_units as $u) {
+            if (AV_DOCKER_RUNTIME) {
+                $log = logs_for($u, 20);
+                $recent_logs[$u] = $log['text'] ?? '';
+                continue;
+            }
             $recent_logs[$u] = trim(shellout(
                 'sudo /bin/journalctl -u ' . escapeshellarg($u) .
                 ' --no-pager -n 20 -o short-iso'

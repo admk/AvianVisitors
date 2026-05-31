@@ -6,7 +6,6 @@ import sqlite3
 import subprocess
 import tempfile
 import io
-import soundfile
 from time import sleep
 
 import requests
@@ -122,7 +121,9 @@ def summary(file: ParseFileName, detection: Detection):
 
 
 def write_to_file(file: ParseFileName, detection: Detection):
-    with open(os.path.expanduser('~/BirdNET-Pi/BirdDB.txt'), 'a') as rfile:
+    path = os.environ.get('AV_BIRDDB_TEXT_PATH', os.path.expanduser('~/BirdNET-Pi/BirdDB.txt'))
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'a') as rfile:
         rfile.write(f'{summary(file, detection)}\n')
 
 
@@ -173,6 +174,7 @@ def bird_weather(file: ParseFileName, detections: [Detection]):
         return
     if detections:
         try:
+            import soundfile
             data, samplerate = soundfile.read(file.file_name)
             buf = io.BytesIO()
             soundfile.write(buf, data, samplerate, format='FLAC')

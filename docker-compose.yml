@@ -1,0 +1,26 @@
+services:
+  app:
+    build: { context: ., dockerfile: docker/app/Dockerfile }
+    env_file: [.env]
+    environment:
+      AV_DOCKER: "1"
+      AV_ALLOW_EMPTY_DB: "1"
+      AV_REQUIRE_AUTH: "${AV_REQUIRE_AUTH:-0}"
+      LATITUDE: "${LATITUDE:-22.5431}"
+      LONGITUDE: "${LONGITUDE:-114.0579}"
+      TZ: "${TZ:-Asia/Shanghai}"
+      RTSP_TRANSPORT: "${RTSP_TRANSPORT:-tcp}"
+      STREAM_AUDIO_BITRATE: "${STREAM_AUDIO_BITRATE:-128k}"
+      STREAM_AUDIO_CHANNELS: "${STREAM_AUDIO_CHANNELS:-1}"
+      FFMPEG_LOG_LEVEL: "${FFMPEG_LOG_LEVEL:-quiet}"
+      http_proxy: "${CONTAINER_HTTP_PROXY:-http://host.docker.internal:7890}"
+      https_proxy: "${CONTAINER_HTTPS_PROXY:-http://host.docker.internal:7890}"
+      all_proxy: "${CONTAINER_ALL_PROXY:-http://host.docker.internal:7890}"
+      no_proxy: "${NO_PROXY:-127.0.0.1,localhost,::1}"
+      NO_PROXY: "${NO_PROXY:-127.0.0.1,localhost,::1}"
+    ports: ["${AVIAN_HTTP_PORT:-8080}:80"]
+    volumes: [avian-data:/data]
+    restart: unless-stopped
+
+volumes:
+  avian-data:

@@ -28,7 +28,8 @@ if (getenv('AV_REQUIRE_AUTH') === '1' && empty($_SERVER['HTTP_AUTHORIZATION'])) 
 
 // Path layout: /home/{USER}/BirdNET-Pi/avian/api/config.php
 $BIRDNETPI_DIR = dirname(__DIR__, 2);
-$CONF_PATH     = "$BIRDNETPI_DIR/birdnet.conf";
+$CONF_PATH     = realpath("$BIRDNETPI_DIR/birdnet.conf") ?: "$BIRDNETPI_DIR/birdnet.conf";
+$IS_DOCKER     = getenv('AV_DOCKER') === '1';
 
 // Whitelist: { config_key => { type, min?, max?, restart? } }
 $ALLOWED = [
@@ -180,6 +181,10 @@ if ($method === 'POST') {
     $restarted = [];
     if ($needsRestart) {
         foreach (['birdnet_analysis', 'birdnet_recording'] as $svc) {
+            if ($IS_DOCKER) {
+                $restarted[$svc] = 'skipped: docker runtime';
+                continue;
+            }
             // Pre-baked sudoers rule: caddy NOPASSWD: /bin/systemctl restart birdnet_*
             $rc = 0; $out = [];
             exec('sudo /bin/systemctl restart ' . escapeshellarg($svc) . ' 2>&1', $out, $rc);

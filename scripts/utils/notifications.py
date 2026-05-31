@@ -1,4 +1,3 @@
-import apprise
 import os
 import socket
 import requests
@@ -20,6 +19,7 @@ species_last_notified = {}
 def notify(body, title, attached=""):
     global apobj
     if apobj is None:
+        import apprise
         asset = apprise.AppriseAsset(
             plugin_paths=[
                 userDir + "/.apprise/plugins",

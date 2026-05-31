@@ -12,9 +12,12 @@ os.environ['CUDA_VISIBLE_DEVICES'] = ''
 np.set_printoptions(legacy="1.21")
 
 try:
-    import tflite_runtime.interpreter as tflite
+    from ai_edge_litert import interpreter as tflite
 except ImportError:
-    from tensorflow import lite as tflite
+    try:
+        import tflite_runtime.interpreter as tflite
+    except ImportError:
+        from tensorflow import lite as tflite
 
 log = logging.getLogger(__name__)
 

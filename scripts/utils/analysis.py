@@ -1,8 +1,8 @@
 import logging
 import os
+import subprocess
 import time
 
-import librosa
 import numpy as np
 
 from .classes import Detection, ParseFileName
@@ -47,11 +47,22 @@ def splitSignal(sig, rate, overlap, seconds=3.0, minlen=1.5):
 def readAudioData(path, overlap, sample_rate, chunk_duration):
     log.info('READING AUDIO DATA...')
 
-    # Open file with librosa (uses ffmpeg or libav)
-    sig, rate = librosa.load(path, sr=sample_rate, mono=True, res_type='kaiser_fast')
+    result = subprocess.run([
+        'ffmpeg',
+        '-hide_banner',
+        '-loglevel', 'error',
+        '-nostdin',
+        '-i', path,
+        '-vn',
+        '-ac', '1',
+        '-ar', str(sample_rate),
+        '-f', 'f32le',
+        '-',
+    ], check=True, capture_output=True)
+    sig = np.frombuffer(result.stdout, dtype=np.float32)
 
     # Split audio into chunks
-    chunks = splitSignal(sig, rate, overlap, seconds=chunk_duration)
+    chunks = splitSignal(sig, sample_rate, overlap, seconds=chunk_duration)
 
     log.info('READING DONE! READ %d CHUNKS.', len(chunks))
 

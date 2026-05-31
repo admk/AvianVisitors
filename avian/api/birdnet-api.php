@@ -18,6 +18,9 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: public, max-age=30');
 
+$TZ = getenv('TZ');
+if ($TZ) @date_default_timezone_set($TZ);
+
 // PHP resolves __DIR__ through symlinks to the realpath. This script
 // lives at $HOME/BirdNET-Pi/avian/api/birdnet-api.php (served via the
 // ${EXTRACTED}/avian symlink). dirname(..., 2) walks to the BirdNET-Pi

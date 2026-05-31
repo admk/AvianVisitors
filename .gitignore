@@ -16,6 +16,8 @@
 .idea
 
 # Sensitive or high-churn files
+.env
+*.env.local
 .idea/**/dataSources/
 .idea/**/dataSources.ids
 .idea/**/dataSources.local.xml
@@ -30,6 +32,8 @@ __pycache__/
 .vscode
 model/labels.txt
 datasets/
+BirdSongs/
+docker/data/
 birdnet.conf
 IdentifiedSoFar.txt
 IdentifiedSoFar.txt.bak

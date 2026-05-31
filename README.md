@@ -10,12 +10,12 @@ See it running at [bird.onethreenine.net](https://bird.onethreenine.net).
 
 ## BOM
 
-| Qty | Description | Price | Link |
-|-----|-------------|-------|------|
-| 1 | Raspberry Pi (4B / 5 / Zero 2W) | ~$35-80 | [Raspberry Pi](https://www.raspberrypi.com/products/) |
-| 1 | Micro SD Card (≥32 GB) | ~$10 | [Amazon](https://www.amazon.com/s?k=32gb+micro+sd+card&i=electronics&crid=1RCJAD1J0EPDX&sprefix=32gb+micro+sd+card%2Celectronics%2C226&ref=nb_sb_noss_1) |
-| 1 | USB lavalier microphone | $16.95 | [Amazon](https://www.amazon.com/dp/B0176NRE1G) |
-| 1 | Pi power supply | ~$10 | - |
+| Qty | Description | Price | Link | Notes |
+|-----|-------------|-------|------| ----- |
+| 1 | Raspberry Pi (4B / 5 / Zero 2W) | ~$35-80 | [Raspberry Pi](https://www.raspberrypi.com/products/) | [See note for RPi20](https://github.com/mcguirepr89/BirdNET-Pi/wiki/RPi0W2-Installation-Guide) |
+| 1 | Micro SD Card (≥32 GB) | ~$10 | [Amazon](https://www.amazon.com/s?k=32gb+micro+sd+card&i=electronics&crid=1RCJAD1J0EPDX&sprefix=32gb+micro+sd+card%2Celectronics%2C226&ref=nb_sb_noss_1) | |
+| 1 | USB lavalier microphone | $16.95 | [Amazon](https://www.amazon.com/dp/B0176NRE1G) | |
+| 1 | Pi power supply | ~$10 | - | |
 
 Optional: a [Gemini API key](https://aistudio.google.com/apikey) to restyle illustrations, an [eBird API key](https://ebird.org/api/keygen) to filter species by region.
 

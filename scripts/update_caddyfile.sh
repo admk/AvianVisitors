@@ -2,6 +2,14 @@
 source /etc/birdnet/birdnet.conf
 my_dir=$HOME/BirdNET-Pi/scripts
 set -x
+
+# Find the active PHP-FPM Unix socket. The path is version-specific on
+# modern Raspberry Pi OS (e.g. /run/php/php8.2-fpm.sock); the generic
+# /run/php/php-fpm.sock only exists if a compat shim is installed, so
+# hardcoding it breaks Caddy's php_fastcgi handler on stock Bookworm.
+FPM_SOCK=$(ls /run/php/php*-fpm.sock 2>/dev/null | head -n1)
+FPM_SOCK=${FPM_SOCK:-/run/php/php-fpm.sock}
+
 [ -d /etc/caddy ] || mkdir /etc/caddy
 if [ -f /etc/caddy/Caddyfile ];then
   cp /etc/caddy/Caddyfile{,.original}
@@ -41,7 +49,7 @@ http:// ${BIRDNETPI_URL} {
   # index.php. The default try_files for php_fastcgi prefers index.php
   # over index.html, so override it - this is a no-op on stock installs
   # since EXTRACTED has no index.html there.
-  php_fastcgi unix//run/php/php-fpm.sock {
+  php_fastcgi unix/${FPM_SOCK} {
     try_files {path} {path}/index.html {path}/index.php index.php
   }
   reverse_proxy /log* localhost:8080
@@ -65,7 +73,7 @@ http:// ${BIRDNETPI_URL} {
   # index.php. The default try_files for php_fastcgi prefers index.php
   # over index.html, so override it - this is a no-op on stock installs
   # since EXTRACTED has no index.html there.
-  php_fastcgi unix//run/php/php-fpm.sock {
+  php_fastcgi unix/${FPM_SOCK} {
     try_files {path} {path}/index.html {path}/index.php index.php
   }
   reverse_proxy /log* localhost:8080

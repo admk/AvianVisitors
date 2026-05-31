@@ -13,8 +13,8 @@
   // equivalent to a global cache purge for /api/img. (caches.default
   // .delete() in the worker only affects ONE colo at a time, so a
   // versioned URL is the only reliable way to invalidate everywhere.)
-  var IMG_VERSION = '5'; // night-heron flight alpha cleanup: removed
-                          // transparent belly holes and background speckles.
+  var IMG_VERSION = '5'; // illustration alpha cleanup: removes transparent
+                          // body holes and background speckles.
 
   // ---- Sliding pill helper ----
   // Each segmented control has a single .seg-pill element that we move via

@@ -19,6 +19,7 @@ RUN pip install --no-cache-dir --index-url https://pypi.tuna.tsinghua.edu.cn/sim
 WORKDIR /srv/app
 
 COPY avian /srv/app/avian
+RUN python /srv/app/avian/scripts/clean_illustration_alpha.py /srv/app/avian/assets/illustrations
 COPY scripts /srv/app/scripts
 COPY model/BirdNET_GLOBAL_6K_V2.4_Model_FP16.tflite /srv/app/model/BirdNET_GLOBAL_6K_V2.4_Model_FP16.tflite
 COPY model/BirdNET_GLOBAL_6K_V2.4_Model_FP16_Labels.txt /srv/app/model/BirdNET_GLOBAL_6K_V2.4_Model_FP16_Labels.txt

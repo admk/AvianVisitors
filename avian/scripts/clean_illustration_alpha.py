@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Clean generated illustration alpha masks.
+"""Clean generated illustration alpha masks for dark backgrounds.
 
-The generated PNGs sometimes contain faint background speckles and
-transparent holes inside the bird body. Those are mostly invisible on a
-light page, but become obvious in dark mode. This keeps real bird pixels,
-removes detached dust, and fills enclosed transparent holes from nearby
-feather colors.
+Build a full bird silhouette, fill holes in that silhouette, shrink its
+outer edge, use it as a cream paper backing, then composite the original
+PNG over that backing.
 """
 
 from __future__ import annotations
@@ -14,149 +12,120 @@ import argparse
 from collections import deque
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 
 ALPHA_MIN = 8
 MIN_COMPONENT = 64
-MIN_HOLE = 16
+PAPER = (244, 232, 202)
+MIN_FILTER_SIZE = 5
 
 
 def neighbors4(x: int, y: int) -> tuple[tuple[int, int], ...]:
     return ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1))
 
 
-def clean(path: Path) -> bool:
-    im = Image.open(path).convert("RGBA")
-    px = im.load()
-    width, height = im.size
-
-    def opaque(x: int, y: int) -> bool:
-        return px[x, y][3] >= ALPHA_MIN
-
-    # Keep the bird and any meaningful detached parts; drop dust.
-    seen: set[tuple[int, int]] = set()
-    components: list[list[tuple[int, int]]] = []
+def components(mask: list[bytearray], width: int, height: int) -> list[list[tuple[int, int]]]:
+    seen = [[False] * width for _ in range(height)]
+    out: list[list[tuple[int, int]]] = []
     queue: deque[tuple[int, int]] = deque()
     for y in range(height):
         for x in range(width):
-            if (x, y) in seen or not opaque(x, y):
+            if seen[y][x] or not mask[y][x]:
                 continue
-            component: list[tuple[int, int]] = []
-            seen.add((x, y))
+            comp: list[tuple[int, int]] = []
+            seen[y][x] = True
             queue.append((x, y))
             while queue:
                 cx, cy = queue.popleft()
-                component.append((cx, cy))
+                comp.append((cx, cy))
                 for nx, ny in neighbors4(cx, cy):
-                    if (
-                        0 <= nx < width
-                        and 0 <= ny < height
-                        and (nx, ny) not in seen
-                        and opaque(nx, ny)
-                    ):
-                        seen.add((nx, ny))
+                    if 0 <= nx < width and 0 <= ny < height and not seen[ny][nx] and mask[ny][nx]:
+                        seen[ny][nx] = True
                         queue.append((nx, ny))
-            components.append(component)
-    if not components:
-        return False
+            out.append(comp)
+    return out
 
-    largest = max(len(component) for component in components)
-    keep_min = max(MIN_COMPONENT, int(largest * 0.002))
-    keep = {xy for component in components if len(component) >= keep_min for xy in component}
 
-    changed = False
-    for y in range(height):
-        for x in range(width):
-            if (x, y) not in keep and px[x, y][3] != 0:
-                r, g, b, _ = px[x, y]
-                px[x, y] = (r, g, b, 0)
-                changed = True
+def fill_holes(mask: Image.Image) -> Image.Image:
+    width, height = mask.size
+    src = mask.load()
+    exterior = [[False] * width for _ in range(height)]
+    queue: deque[tuple[int, int]] = deque()
 
-    def transparent(x: int, y: int) -> bool:
-        return px[x, y][3] < ALPHA_MIN
+    def add(x: int, y: int) -> None:
+        if src[x, y] == 0 and not exterior[y][x]:
+            exterior[y][x] = True
+            queue.append((x, y))
 
-    # Mark exterior transparency by flood filling from the canvas edge.
-    exterior: set[tuple[int, int]] = set()
-    queue.clear()
     for x in range(width):
-        for y in (0, height - 1):
-            if transparent(x, y) and (x, y) not in exterior:
-                exterior.add((x, y))
-                queue.append((x, y))
+        add(x, 0)
+        add(x, height - 1)
     for y in range(height):
-        for x in (0, width - 1):
-            if transparent(x, y) and (x, y) not in exterior:
-                exterior.add((x, y))
-                queue.append((x, y))
+        add(0, y)
+        add(width - 1, y)
+
     while queue:
         x, y = queue.popleft()
         for nx, ny in neighbors4(x, y):
-            if (
-                0 <= nx < width
-                and 0 <= ny < height
-                and (nx, ny) not in exterior
-                and transparent(nx, ny)
-            ):
-                exterior.add((nx, ny))
+            if 0 <= nx < width and 0 <= ny < height and src[nx, ny] == 0 and not exterior[ny][nx]:
+                exterior[ny][nx] = True
                 queue.append((nx, ny))
 
-    # Remaining transparent components are enclosed holes. Fill them by
-    # propagating nearest boundary color inward.
-    seen = set(exterior)
+    out = Image.new("L", mask.size, 0)
+    dst = out.load()
     for y in range(height):
         for x in range(width):
-            if (x, y) in seen or not transparent(x, y):
-                continue
-            hole: set[tuple[int, int]] = set()
-            seen.add((x, y))
-            queue.append((x, y))
-            while queue:
-                cx, cy = queue.popleft()
-                hole.add((cx, cy))
-                for nx, ny in neighbors4(cx, cy):
-                    if (
-                        0 <= nx < width
-                        and 0 <= ny < height
-                        and (nx, ny) not in seen
-                        and transparent(nx, ny)
-                    ):
-                        seen.add((nx, ny))
-                        queue.append((nx, ny))
-            if len(hole) < MIN_HOLE:
-                continue
+            if src[x, y] or not exterior[y][x]:
+                dst[x, y] = 255
+    return out
 
-            fill_queue: deque[tuple[int, int]] = deque()
-            for hx, hy in hole:
-                for nx, ny in neighbors4(hx, hy):
-                    if 0 <= nx < width and 0 <= ny < height and (nx, ny) not in hole and px[nx, ny][3] >= ALPHA_MIN:
-                        fill_queue.append((hx, hy))
-                        break
 
-            remaining = set(hole)
-            while fill_queue and remaining:
-                hx, hy = fill_queue.popleft()
-                if (hx, hy) not in remaining:
-                    continue
-                samples = [
-                    px[nx, ny]
-                    for nx, ny in neighbors4(hx, hy)
-                    if 0 <= nx < width and 0 <= ny < height and (nx, ny) not in remaining and px[nx, ny][3] >= ALPHA_MIN
-                ]
-                if not samples:
-                    continue
-                # Nearest-boundary propagation: use the strongest nearby
-                # source color instead of averaging the whole hole.
-                r, g, b, _ = max(samples, key=lambda c: c[3])
-                px[hx, hy] = (r, g, b, 255)
-                remaining.remove((hx, hy))
+def clean(path: Path) -> bool:
+    original = Image.open(path).convert("RGBA")
+    px = original.load()
+    width, height = original.size
+
+    opaque = [
+        bytearray(1 if px[x, y][3] >= ALPHA_MIN else 0 for x in range(width))
+        for y in range(height)
+    ]
+    comps = components(opaque, width, height)
+    if not comps:
+        return False
+
+    largest = max(len(comp) for comp in comps)
+    keep_min = max(MIN_COMPONENT, int(largest * 0.002))
+    silhouette = Image.new("L", (width, height), 0)
+    sp = silhouette.load()
+    keep = set()
+    for comp in comps:
+        if len(comp) >= keep_min:
+            for x, y in comp:
+                sp[x, y] = 255
+                keep.add((x, y))
+
+    filled_silhouette = fill_holes(silhouette)
+    backing_mask = filled_silhouette.filter(ImageFilter.MinFilter(MIN_FILTER_SIZE))
+
+    cream = Image.new("RGBA", (width, height), (*PAPER, 255))
+    cream.putalpha(backing_mask)
+
+    cleaned_original = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    co = cleaned_original.load()
+    changed = False
+    for y in range(height):
+        for x in range(width):
+            if (x, y) in keep:
+                co[x, y] = px[x, y]
+            elif px[x, y][3] != 0:
                 changed = True
-                for nx, ny in neighbors4(hx, hy):
-                    if (nx, ny) in remaining:
-                        fill_queue.append((nx, ny))
 
+    out = Image.alpha_composite(cream, cleaned_original)
+    if out.tobytes() != original.tobytes():
+        changed = True
     if changed:
-        im.save(path)
+        out.save(path)
     return changed
 
 

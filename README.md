@@ -36,6 +36,8 @@ Plug the USB mic into the Pi. Place the capsule in a window or mount it outside.
 
 ## 2. Run the installer
 
+Installer assumes passwordless sudo (Raspberry Pi OS Lite default - if you've tightened it, run `sudo raspi-config` -> *System Options* -> restore the default first).
+
 ```bash
 ssh <your-username>@birdnet.local
 curl -s https://raw.githubusercontent.com/Twarner491/AvianVisitors/avian-visitors/newinstaller.sh | bash

@@ -13,9 +13,8 @@
   // equivalent to a global cache purge for /api/img. (caches.default
   // .delete() in the worker only affects ONE colo at a time, so a
   // versioned URL is the only reliable way to invalidate everywhere.)
-  var IMG_VERSION = '4'; // re-regen of poecile-rufescens - prior version's
-                          // wing-coverts read as a second/third wing alongside
-                          // the chestnut back. New gen has clean separation.
+  var IMG_VERSION = '5'; // night-heron flight alpha cleanup: removed
+                          // transparent belly holes and background speckles.
 
   // ---- Sliding pill helper ----
   // Each segmented control has a single .seg-pill element that we move via

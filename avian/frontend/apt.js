@@ -16,6 +16,12 @@
   var IMG_VERSION = '5'; // illustration alpha cleanup: removes transparent
                           // body holes and background speckles.
 
+  function cutoutCacheQuery() {
+    // Every surface must include IMG_VERSION, otherwise browsers/CDNs can
+    // keep serving a pre-cleanup PNG even after the collage has refreshed.
+    return '&v=' + IMG_VERSION + '&sketch=' + SKETCH_VERSION;
+  }
+
   var I18N = {
     en: {
       langButton: 'EN',
@@ -808,7 +814,7 @@
       var name = speciesName(s);
       var img = './avian/api/cutout.php?sci=' + encodeURIComponent(s.sci) +
         (comEn ? '&com=' + encodeURIComponent(comEn) : '') +
-        '&pose=2&v=' + IMG_VERSION;
+        '&pose=2' + cutoutCacheQuery();
       var btn = document.createElement('button');
       btn.className = 'gtile';
       btn.type = 'button';
@@ -1351,7 +1357,7 @@
       var name = speciesName(s);
       var sketchSrc = './avian/api/cutout.php?sci=' + encodeURIComponent(s.sci) +
         (comEn ? '&com=' + encodeURIComponent(comEn) : '') +
-        '&v=' + SKETCH_VERSION;
+        cutoutCacheQuery();
       var audioSrc = './avian/api/recording.php?sci=' + encodeURIComponent(s.sci);
       var spectroSrc = './avian/api/spectrogram.php?sci=' + encodeURIComponent(s.sci);
       // The "all time" window makes the windowed count identical to the
@@ -2097,7 +2103,7 @@
     var com = sp ? speciesNameEn(sp) : '';
     var base = './avian/api/cutout.php?sci=' + encodeURIComponent(sci) +
       (com ? '&com=' + encodeURIComponent(com) : '') +
-      '&v=' + SKETCH_VERSION;
+      cutoutCacheQuery();
     var n = +pose || 1;
     return n > 1 ? base + '&pose=' + n : base;
   }

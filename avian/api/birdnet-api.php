@@ -58,7 +58,44 @@ function one(SQLite3 $db, string $sql, array $bind = []) {
     return $r[0] ?? null;
 }
 
+function normalized_lang(): string {
+    $raw = (string)($_GET['lang'] ?? $_GET['locale'] ?? '');
+    $raw = str_replace('_', '-', strtolower(trim($raw)));
+    if ($raw === 'zh' || $raw === 'zh-cn' || strpos($raw, 'zh-hans') === 0 || $raw === 'zh-sg') {
+        return 'zh_CN';
+    }
+    return 'en';
+}
+
+function language_labels(string $lang): array {
+    static $cache = [];
+    if ($lang === 'en') return [];
+    if (isset($cache[$lang])) return $cache[$lang];
+
+    $path = dirname(__DIR__, 2) . "/model/l18n/labels_$lang.json";
+    if (!is_file($path)) return $cache[$lang] = [];
+
+    $labels = json_decode((string)file_get_contents($path), true);
+    return $cache[$lang] = is_array($labels) ? $labels : [];
+}
+
+function localize_species_row(array $row, array $labels): array {
+    if (isset($row['com'])) $row['com_en'] = $row['com'];
+    if ($labels && isset($row['sci'], $labels[$row['sci']]) && $labels[$row['sci']] !== '') {
+        $row['com'] = $labels[$row['sci']];
+    }
+    return $row;
+}
+
+function localize_species_rows(array $rows, array $labels): array {
+    foreach ($rows as &$row) $row = localize_species_row($row, $labels);
+    unset($row);
+    return $rows;
+}
+
 $action = $_GET['action'] ?? 'stats';
+$LANG = normalized_lang();
+$LABELS = language_labels($LANG);
 
 switch ($action) {
 
@@ -87,9 +124,10 @@ switch ($action) {
         // frontend can read either response interchangeably).
         $rs = rows($db,
           "SELECT Sci_Name AS sci, Com_Name AS com, MIN(Date||' '||Time) AS first_seen, "
-        . "       MAX(Date||' '||Time) AS last_seen, COUNT(*) AS n, MAX(Confidence) AS best_conf "
+        . "       MAX(Date||' '||Time) AS last_seen, COUNT(*) AS n, COUNT(*) AS total, MAX(Confidence) AS best_conf "
         . "FROM detections GROUP BY Sci_Name ORDER BY first_seen ASC"
         );
+        $rs = localize_species_rows($rs, $LABELS);
         echo json_encode(['species' => $rs, 'as_of' => date('c')]);
         break;
     }
@@ -122,6 +160,7 @@ switch ($action) {
             $r['top_file'] = $best['file'] ?? null;
             $r['top_at']   = isset($best['d']) ? ($best['d'].' '.$best['t']) : null;
         }
+        $rs = localize_species_rows($rs, $LABELS);
         echo json_encode(['hours' => $hours, 'species' => $rs, 'as_of' => date('c')]);
         break;
     }
@@ -140,6 +179,11 @@ switch ($action) {
         . "FROM detections WHERE Sci_Name = :sn",
           [':sn' => $sci]
         );
+        if ($summary) {
+            $summary['sci'] = $sci;
+            $summary = localize_species_row($summary, $LABELS);
+            unset($summary['sci']);
+        }
         echo json_encode(['sci' => $sci, 'summary' => $summary, 'detections' => $detections]);
         break;
     }
@@ -183,6 +227,7 @@ switch ($action) {
         . "FROM detections GROUP BY Sci_Name ORDER BY first_seen DESC LIMIT :lim",
           [':lim' => $limit]
         );
+        $rs = localize_species_rows($rs, $LABELS);
         echo json_encode(['species' => $rs, 'as_of' => date('c')]);
         break;
     }

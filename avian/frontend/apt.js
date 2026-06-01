@@ -16,6 +16,271 @@
   var IMG_VERSION = '5'; // illustration alpha cleanup: removes transparent
                           // body holes and background speckles.
 
+  var I18N = {
+    en: {
+      langButton: 'EN',
+      langLabel: 'switch language',
+      titles: ['Heard Recently', 'Heard Recently', 'Avian Visitors'],
+      pageTitle: 'your birds',
+      pageDescription: 'A live bird collage from your window.',
+      brand: 'your birds',
+      collage: 'collage',
+      stats: 'stats',
+      atlas: 'atlas',
+      menu: 'menu',
+      password: 'password',
+      backToCollage: 'back to collage',
+      toggleDarkMode: 'toggle dark mode',
+      unlock: 'unlock',
+      birdCollage: 'Bird collage',
+      statsAria: 'Stats',
+      atlasAria: 'Atlas',
+      sortAtlas: 'sort atlas',
+      pose: 'Pose',
+      view: 'View',
+      lockHint: 'enter password to unlock tools.',
+      wrongPassword: 'wrong password.',
+      authUnavailable: 'auth unavailable.',
+      networkError: 'network error.',
+      noBirdsWindow: 'no birds heard in this window.',
+      noDetectionsWindow: 'no detections in this window',
+      noDetectionsWindowSentence: 'No detections in this window.',
+      noBirdsDetected: 'No birds detected yet.',
+      atlasHint: 'The atlas fills up as BirdNET-Pi identifies new species.',
+      atlasLongerHint: 'Try a longer time window - the lifelist is still here under ALL.',
+      byPeriod: 'By Period',
+      byPeriodHint: 'detections, grouped by recency',
+      topSpecies: 'Top Species',
+      topSpeciesHintPrefix: 'most-heard, ',
+      firstDetections: 'First Detections',
+      firstDetectionsHint: 'newest additions to the life list',
+      lastHour: 'last hour',
+      today: 'today',
+      last7Days: 'last 7 days',
+      allTime: 'all time',
+      topMostHeard: 'most heard',
+      topMostRecent: 'most recent',
+      alphabetical: 'a -> z',
+      callsOne: 'call',
+      callsMany: 'calls',
+      thisHour: 'this hour',
+      past12h: 'past 12h',
+      thisWeek: 'this week',
+      noDetectionsYet: 'no detections yet',
+      noAudio: 'no audio',
+      play: 'play',
+      stop: 'stop',
+      playRecording: 'play recording',
+      scrub: 'scrub',
+      loadingDescription: 'Loading description...',
+      noDescription: 'No description available.',
+      allTimeShort: 'all time',
+      firstHeard: 'first heard',
+      window: 'window',
+      genus: 'genus',
+      rarity: 'rarity',
+      recordings: 'Recordings',
+      loadingRecordings: 'Loading recordings...',
+      noRecordings: 'No recordings yet.',
+      failedRecordings: 'Failed to load recordings.',
+      captured: ' captured',
+      loadingSpectrogram: 'loading spectrogram...',
+      renderingSpectrogram: 'rendering spectrogram...',
+      spectrogramUnavailable: 'spectrogram unavailable',
+      webAudioUnavailable: 'WebAudio not available',
+      spectrogramFailedPrefix: 'spectrogram failed: ',
+      perched: 'perched',
+      inFlight: 'in flight',
+      close: 'Close',
+      wiki: 'wiki',
+      ebird: 'ebird',
+      liveAudio: 'Live audio',
+      streamFromMic: 'stream from the mic',
+      listen: 'listen',
+      connecting: 'connecting...',
+      streamingFromPi: 'streaming from pi',
+      streamUnavailable: 'stream unavailable',
+      streamErrorCheckSystem: 'stream error - check /#admin=system',
+      autoplayBlocked: 'browser blocked autoplay - tap listen again',
+      save: 'save',
+      changePending: 'change pending',
+      saving: 'saving...',
+      saved: 'saved',
+      saveFailed: 'save failed',
+      loadingSettings: 'loading settings...',
+      preserveAllRecordings: 'Preserve all recordings',
+      dontAutoDelete: "don't auto-delete",
+      confidenceThreshold: 'Confidence threshold',
+      minScoreDetection: 'min score to log a detection',
+      sensitivity: 'Sensitivity',
+      analyzerSensitivity: 'analyzer sensitivity',
+      chunkOverlap: 'Chunk overlap',
+      secondsAnalyzed: 'seconds analyzed per pass',
+      whenDiskFills: 'When disk fills',
+      keep: 'keep',
+      purge: 'purge',
+      aboutTitle: 'The birds outside your window',
+      aboutBody: "A tiny microphone identifies every passing bird with Cornell's BirdNET. Each species shows up as an illustration in the collage, sized by how often it's been heard.",
+      aboutExplore: 'explore the birds ->',
+      nowTag: 'NOW',
+      todayTag: 'TODAY',
+      weekTag: 'WEEK',
+      allTag: 'ALL',
+      todayAgo: 'today',
+      daysAgo: 'd ago',
+      secAgo: 's ago',
+      minAgo: 'm ago',
+      hourAgo: 'h ago',
+      common: 'common',
+      regular: 'regular',
+      occasional: 'occasional',
+      rare: 'rare',
+    },
+    'zh-CN': {
+      langButton: '中',
+      langLabel: '切换语言',
+      titles: ['近期鸟声', '近期鸟声', '访客图鉴'],
+      pageTitle: '窗外鸟声',
+      pageDescription: '实时记录窗边听到的鸟类。',
+      brand: '窗外鸟声',
+      collage: '拼贴',
+      stats: '统计',
+      atlas: '图鉴',
+      menu: '菜单',
+      password: '密码',
+      backToCollage: '返回拼贴',
+      toggleDarkMode: '切换深色模式',
+      unlock: '解锁',
+      birdCollage: '鸟类拼贴',
+      statsAria: '统计',
+      atlasAria: '图鉴',
+      sortAtlas: '排序图鉴',
+      pose: '姿态',
+      view: '视图',
+      lockHint: '输入密码以解锁工具。',
+      wrongPassword: '密码错误。',
+      authUnavailable: '认证不可用。',
+      networkError: '网络错误。',
+      noBirdsWindow: '这段时间还没有听到鸟声。',
+      noDetectionsWindow: '这段时间没有记录',
+      noDetectionsWindowSentence: '这段时间没有记录。',
+      noBirdsDetected: '还没有检测到鸟类。',
+      atlasHint: 'BirdNET-Pi 每识别到一种新鸟，图鉴就会多一张卡片。',
+      atlasLongerHint: '换个更长的时间范围；完整清单在“全部”里。',
+      byPeriod: '时间范围',
+      byPeriodHint: '按时间范围汇总的记录',
+      topSpecies: '最常听到',
+      topSpeciesHintPrefix: '按记录次数排序，',
+      firstDetections: '初次记录',
+      firstDetectionsHint: '最近加入清单的鸟种',
+      lastHour: '过去 1 小时',
+      today: '今天',
+      last7Days: '最近 7 天',
+      allTime: '全部时间',
+      topMostHeard: '记录最多',
+      topMostRecent: '最近出现',
+      alphabetical: '按名称',
+      callsOne: '次',
+      callsMany: '次',
+      thisHour: '过去 1 小时',
+      past12h: '过去 12 小时',
+      thisWeek: '本周',
+      noDetectionsYet: '还没有记录',
+      noAudio: '无音频',
+      play: '播放',
+      stop: '停止',
+      playRecording: '播放录音',
+      scrub: '拖动播放进度',
+      loadingDescription: '正在加载描述...',
+      noDescription: '暂无描述。',
+      allTimeShort: '全部时间',
+      firstHeard: '首次听到',
+      window: '时间段',
+      genus: '属',
+      rarity: '出现频率',
+      recordings: '录音',
+      loadingRecordings: '正在加载录音...',
+      noRecordings: '还没有录音。',
+      failedRecordings: '录音加载失败。',
+      captured: ' 条录音',
+      loadingSpectrogram: '正在加载声谱图...',
+      renderingSpectrogram: '正在绘制声谱图...',
+      spectrogramUnavailable: '声谱图不可用',
+      webAudioUnavailable: 'WebAudio 不可用',
+      spectrogramFailedPrefix: '声谱图失败：',
+      perched: '停栖',
+      inFlight: '飞行',
+      close: '关闭',
+      wiki: '维基',
+      ebird: 'eBird',
+      liveAudio: '实时音频',
+      streamFromMic: '来自麦克风的音频流',
+      listen: '收听',
+      connecting: '正在连接...',
+      streamingFromPi: '正在播放 Pi 音频',
+      streamUnavailable: '音频流不可用',
+      streamErrorCheckSystem: '音频流出错，请检查 /#admin=system',
+      autoplayBlocked: '浏览器阻止自动播放，请再次点击收听',
+      save: '保存',
+      changePending: '有未保存更改',
+      saving: '正在保存...',
+      saved: '已保存',
+      saveFailed: '保存失败',
+      loadingSettings: '正在加载设置...',
+      preserveAllRecordings: '保留所有录音',
+      dontAutoDelete: '不要自动删除',
+      confidenceThreshold: '置信度阈值',
+      minScoreDetection: '记录检测所需的最低分数',
+      sensitivity: '灵敏度',
+      analyzerSensitivity: '分析器灵敏度',
+      chunkOverlap: '音频片段重叠',
+      secondsAnalyzed: '每轮分析的秒数',
+      whenDiskFills: '磁盘写满时',
+      keep: '保留',
+      purge: '清理',
+      aboutTitle: '窗外的鸟',
+      aboutBody: '一支小麦克风会用康奈尔的 BirdNET 辨认窗外的鸟声。每种鸟都会以插画出现在拼贴中，大小取决于被听到的频率。',
+      aboutExplore: '浏览鸟类 ->',
+      nowTag: '现在',
+      todayTag: '今天',
+      weekTag: '本周',
+      allTag: '全部',
+      todayAgo: '今天',
+      daysAgo: '天前',
+      secAgo: ' 秒前',
+      minAgo: ' 分钟前',
+      hourAgo: ' 小时前',
+      common: '常见',
+      regular: '经常',
+      occasional: '偶见',
+      rare: '少见',
+    },
+  };
+
+  function readLS(k, fallback) { try { return localStorage.getItem(k) || fallback; } catch (e) { return fallback; } }
+  function writeLS(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function browserLang() {
+    var raw = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+    if (/^zh(?!-(tw|hk|mo|hant))/.test(raw) || raw === 'zh-cn' || raw === 'zh-hans') return 'zh-CN';
+    return 'en';
+  }
+  function normalizeLang(lang) { return lang === 'zh-CN' ? 'zh-CN' : 'en'; }
+  var currentLang = normalizeLang(readLS('bird:lang', browserLang()));
+  function tr(key) {
+    return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
+  }
+  function apiLangParam() { return currentLang === 'zh-CN' ? '&lang=zh-CN' : ''; }
+  function speciesName(s) { return (s && (s.com || s.com_en || s.sci)) || ''; }
+  function speciesNameEn(s) { return (s && (s.com_en || s.com || s.sci)) || ''; }
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function fmtAgo(n, key) {
+    return currentLang === 'zh-CN' ? (n + tr(key)) : (n + tr(key));
+  }
+
   // ---- Sliding pill helper ----
   // Each segmented control has a single .seg-pill element that we move via
   // transform/width to whichever button currently has aria-current="true".
@@ -38,11 +303,11 @@
   // Each view's title text. The shared static-head shows one of these
   // based on the current view; identical adjacent values mean the title
   // stays put with no fade (collage and stats both say Heard Recently).
-  var VIEW_TITLES = ['Heard Recently', 'Heard Recently', 'Avian Visitors'];
+  function viewTitle(i) { return tr('titles')[i] || I18N.en.titles[i] || ''; }
   var staticHead = document.querySelector('.static-head');
   var staticTitle = document.getElementById('staticTitle');
   function setTitleForView(i) {
-    var next = VIEW_TITLES[i];
+    var next = viewTitle(i);
     if (!staticTitle || staticTitle.textContent === next) return;
     // Fade out -> swap text -> fade in. The opacity transition is 240ms;
     // we swap at ~half that so the eye doesn't catch the text change.
@@ -68,8 +333,6 @@
   // Persist selections across reloads so a returning visitor lands on the
   // same view they left. Keys are namespaced so a future schema change
   // can be invalidated by bumping the prefix.
-  function readLS(k, fallback) { try { return localStorage.getItem(k) || fallback; } catch (e) { return fallback; } }
-  function writeLS(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   var winBtns = [].slice.call(winPick.querySelectorAll('button'));
   var currentHours = +readLS('bird:window', '24') || 24;
   winBtns.forEach(function (b) {
@@ -124,6 +387,103 @@
       var next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       writeTheme(next);
       applyTheme(next);
+    });
+  }
+
+  var langBtn = document.getElementById('langBtn');
+  function applyStaticLanguage() {
+    document.documentElement.lang = currentLang === 'zh-CN' ? 'zh-Hans-CN' : 'en';
+    document.title = tr('pageTitle');
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', tr('pageDescription'));
+    if (langBtn) {
+      langBtn.textContent = tr('langButton');
+      langBtn.setAttribute('aria-label', tr('langLabel'));
+    }
+    var aboutLink = document.getElementById('aboutLink');
+    if (aboutLink) aboutLink.textContent = tr('brand');
+    var returnToAtlas = document.getElementById('returnToAtlas');
+    if (returnToAtlas) {
+      returnToAtlas.setAttribute('aria-label', tr('backToCollage'));
+      var textNode = [].slice.call(returnToAtlas.childNodes).filter(function (n) { return n.nodeType === 3; })[0];
+      if (textNode) textNode.nodeValue = '\n  ' + tr('collage') + '\n';
+    }
+    if (staticTitle) staticTitle.textContent = viewTitle(btns.findIndex(function (b) {
+      return b.getAttribute('aria-current') === 'true';
+    }) || 0);
+    var menu = document.getElementById('menuBtn');
+    if (menu) menu.textContent = tr('menu');
+    var theme = document.getElementById('themeBtn');
+    if (theme) theme.setAttribute('aria-label', tr('toggleDarkMode'));
+    var unlock = document.querySelector('#unlockForm button[type="submit"]');
+    if (unlock) unlock.setAttribute('aria-label', tr('unlock'));
+    var v0 = document.getElementById('v0');
+    var v1 = document.getElementById('v1');
+    var v2 = document.getElementById('v2');
+    if (v0) v0.setAttribute('aria-label', tr('birdCollage'));
+    if (v1) v1.setAttribute('aria-label', tr('statsAria'));
+    if (v2) v2.setAttribute('aria-label', tr('atlasAria'));
+    if (atlasSortEl) atlasSortEl.setAttribute('aria-label', tr('sortAtlas'));
+    var poseToggle = document.getElementById('modalPoseToggle');
+    if (poseToggle) poseToggle.setAttribute('aria-label', tr('pose'));
+    if (slider) slider.setAttribute('aria-label', tr('view'));
+    var lockPass = document.getElementById('lockPass');
+    if (lockPass) lockPass.setAttribute('placeholder', tr('password'));
+    if (lockHint && !lockHint.classList.contains('lock-err')) lockHint.textContent = tr('lockHint');
+    var sliderLabels = [tr('collage'), tr('stats'), tr('atlas')];
+    btns.forEach(function (b, i) { b.textContent = sliderLabels[i]; });
+    var allBtn = winPick && winPick.querySelector('button[data-h="1000000"]');
+    if (allBtn) allBtn.textContent = tr('allTag');
+    var statsHeads = document.querySelectorAll('.stats-side .grp h3');
+    if (statsHeads[0]) statsHeads[0].textContent = tr('byPeriod');
+    if (statsHeads[1]) statsHeads[1].textContent = tr('topSpecies');
+    if (statsHeads[2]) statsHeads[2].textContent = tr('firstDetections');
+    var statsHints = document.querySelectorAll('.stats-side .grp small');
+    if (statsHints[0]) statsHints[0].textContent = tr('byPeriodHint');
+    if (statsHints[1]) statsHints[1].textContent = tr('topSpeciesHintPrefix') + windowLabel(currentHours);
+    if (statsHints[2]) statsHints[2].textContent = tr('firstDetectionsHint');
+    var sortTips = atlasSortEl ? atlasSortEl.querySelectorAll('.tip') : [];
+    if (sortTips[0]) sortTips[0].textContent = tr('topMostHeard');
+    if (sortTips[1]) sortTips[1].textContent = tr('topMostRecent');
+    if (sortTips[2]) sortTips[2].textContent = tr('alphabetical');
+    var modalClose = document.querySelector('#detail-modal .modal-close');
+    if (modalClose) modalClose.setAttribute('aria-label', tr('close'));
+    var aboutClose = document.querySelector('#about-modal .modal-close');
+    if (aboutClose) aboutClose.setAttribute('aria-label', tr('close'));
+    var poseTips = document.querySelectorAll('#modalPoseToggle .tip');
+    if (poseTips[0]) poseTips[0].textContent = tr('perched');
+    if (poseTips[1]) poseTips[1].textContent = tr('inFlight');
+    var modalStatLabels = document.querySelectorAll('.modal-stats .lbl');
+    if (modalStatLabels[0]) modalStatLabels[0].textContent = tr('allTimeShort');
+    if (modalStatLabels[1]) modalStatLabels[1].textContent = tr('window');
+    if (modalStatLabels[2]) modalStatLabels[2].textContent = tr('firstHeard');
+    var metaKeys = document.querySelectorAll('.modal-meta .k');
+    if (metaKeys[0]) metaKeys[0].textContent = tr('genus');
+    if (metaKeys[1]) metaKeys[1].textContent = tr('rarity');
+    var recHead = document.querySelector('.modal-recordings h3');
+    if (recHead) recHead.textContent = tr('recordings');
+    var wiki = document.getElementById('modalWiki');
+    if (wiki) wiki.textContent = tr('wiki');
+    var ebird = document.getElementById('modalEbird');
+    if (ebird) ebird.textContent = tr('ebird');
+    var aboutEyebrow = document.querySelector('.about-eyebrow');
+    if (aboutEyebrow) aboutEyebrow.textContent = tr('brand');
+    var aboutTitle = document.getElementById('aboutTitle');
+    if (aboutTitle) aboutTitle.textContent = tr('aboutTitle');
+    var aboutBody = document.querySelector('.about-body');
+    if (aboutBody) {
+      aboutBody.innerHTML = esc(tr('aboutBody')).replace('BirdNET', '<a href="https://birdnet.cornell.edu/" target="_blank" rel="noopener">BirdNET</a>');
+    }
+    var aboutExplore = document.querySelector('.about-explore');
+    if (aboutExplore) aboutExplore.textContent = tr('aboutExplore');
+    syncAllPills();
+  }
+  if (langBtn) {
+    langBtn.addEventListener('click', function () {
+      currentLang = currentLang === 'zh-CN' ? 'en' : 'zh-CN';
+      writeLS('bird:lang', currentLang);
+      applyStaticLanguage();
+      refreshAll();
     });
   }
   // The buttons size from text content; wait for fonts so width is correct.
@@ -339,7 +699,7 @@
   function renderCollage(items) {
     collage.innerHTML = '';
     if (!items.length) {
-      collage.innerHTML = '<p class="empty">no birds heard in this window.</p>';
+      collage.innerHTML = '<p class="empty">' + esc(tr('noBirdsWindow')) + '</p>';
       return;
     }
     var W = collage.clientWidth, H = collage.clientHeight;
@@ -444,26 +804,28 @@
       // com flows through so the worker's JIT Gemini job uses the right
       // common name in its prompt for a freshly-detected species.
       // &v=IMG_VERSION busts CF edge cache when we re-render any species.
+      var comEn = speciesNameEn(s);
+      var name = speciesName(s);
       var img = './avian/api/cutout.php?sci=' + encodeURIComponent(s.sci) +
-        (s.com ? '&com=' + encodeURIComponent(s.com) : '') +
+        (comEn ? '&com=' + encodeURIComponent(comEn) : '') +
         '&pose=2&v=' + IMG_VERSION;
       var btn = document.createElement('button');
       btn.className = 'gtile';
       btn.type = 'button';
       btn.setAttribute('data-sci', s.sci);
-      btn.setAttribute('aria-label', s.com);
+      btn.setAttribute('aria-label', name);
       // Fallback for keyboard / screen-reader users - the visible hover
       // pill below is the primary affordance for sighted mouse users.
       // "calls" (not "heard") because one bird can rack up dozens of
       // detections in a session; "heard" implies distinct individuals.
       var titleN = +s.n || 0;
-      btn.title = (s.com || s.sci) + ' · ' + fmtN(titleN) + ' ' +
-        (titleN === 1 ? 'call' : 'calls') + ' ' + windowLabel(currentHours);
+      btn.title = name + ' · ' + fmtN(titleN) + ' ' +
+        (titleN === 1 ? tr('callsOne') : tr('callsMany')) + ' ' + windowLabel(currentHours);
       btn.style.left   = r.x + 'px';
       btn.style.top    = r.y + 'px';
       btn.style.width  = r.fullW + 'px';
       btn.style.height = r.fullH + 'px';
-      btn.innerHTML = '<img loading="lazy" decoding="async" src="' + img + '" alt="' + s.com + '">';
+      btn.innerHTML = '<img loading="lazy" decoding="async" src="' + esc(img) + '" alt="' + esc(name) + '">';
       r.el = btn;
       collage.appendChild(btn);
     });
@@ -521,8 +883,8 @@
       if (hit) {
         var s = hit.data;
         var n = +s.n || 0;
-        var noun = (n === 1) ? 'call' : 'calls';
-        tip.innerHTML = '<span class="ct-name">' + (s.com || s.sci) + '</span>'
+        var noun = (n === 1) ? tr('callsOne') : tr('callsMany');
+        tip.innerHTML = '<span class="ct-name">' + esc(speciesName(s)) + '</span>'
           + '<span class="ct-w"> - </span>'
           + '<span class="ct-n">' + fmtN(n) + '</span>'
           + '<span class="ct-w"> ' + noun + ' ' + windowLabel(currentHours) + '</span>';
@@ -592,23 +954,23 @@
   }
   function liRow(yr, label, ct, sci) {
     var attr = sci ? ' data-sci="' + sci.replace(/"/g, '&quot;') + '"' : '';
-    return '<li' + attr + '><span class="yr">' + yr + '</span><span>' + label + '</span><span class="ct">' + (ct == null ? '-' : ct) + '</span></li>';
+    return '<li' + attr + '><span class="yr">' + esc(yr) + '</span><span>' + esc(label) + '</span><span class="ct">' + esc(ct == null ? '-' : ct) + '</span></li>';
   }
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   function fmtN(n) {
     if (n == null) return '-';
     if (n >= 10000) return (n / 1000).toFixed(1) + 'k';
-    return n.toLocaleString();
+    return n.toLocaleString(currentLang === 'zh-CN' ? 'zh-CN' : undefined);
   }
   // Human label for the current time-window picker selection - replaces
   // a bare "window" with the span it actually covers. Thresholds match
   // the winPick buttons (1H / 12H / 24H / 7D / ALL).
   function windowLabel(h) {
-    if (h <= 1) return 'this hour';
-    if (h <= 12) return 'past 12h';
-    if (h <= 24) return 'today';
-    if (h <= 168) return 'this week';
-    return 'all time';
+    if (h <= 1) return tr('thisHour');
+    if (h <= 12) return tr('past12h');
+    if (h <= 24) return tr('today');
+    if (h <= 168) return tr('thisWeek');
+    return tr('allTime');
   }
 
   // ---- Live Pi data layer ----
@@ -724,7 +1086,7 @@
     var windowSpan = Math.max(1, now - windowStart);
 
     if (!all.length) {
-      tl.innerHTML = '<div class="stats-tl-empty">no detections in this window</div>';
+      tl.innerHTML = '<div class="stats-tl-empty">' + esc(tr('noDetectionsWindow')) + '</div>';
       return;
     }
 
@@ -778,11 +1140,11 @@
       var n = +s.n || 0;
       var bottomPct = (n / maxN) * SPAN * 100;
       return ''
-        + '<div class="stats-tl-col" data-sci="' + s.sci + '" style="left:' + leftPct.toFixed(2) + '%">'
+        + '<div class="stats-tl-col" data-sci="' + esc(s.sci) + '" style="left:' + leftPct.toFixed(2) + '%">'
         +   '<div class="stats-tl-square" style="bottom:' + bottomPct.toFixed(1) + '%;width:' + sq + 'px;height:' + sq + 'px"></div>'
         +   '<div class="stats-tl-label" style="bottom:calc(' + bottomPct.toFixed(1) + '% + ' + (sq + LABEL_GAP) + 'px)">'
-        +     '<span class="com">' + (s.com || s.sci) + '</span>'
-        +     '<span class="sci">' + s.sci + '</span>'
+        +     '<span class="com">' + esc(speciesName(s)) + '</span>'
+        +     '<span class="sci">' + esc(s.sci) + '</span>'
         +   '</div>'
         + '</div>';
     }).join('');
@@ -817,7 +1179,9 @@
     }
 
     var note = trimmed
-      ? '<div class="stats-tl-cap">' + C + ' most-heard of ' + all.length + '</div>'
+      ? '<div class="stats-tl-cap">' + esc(currentLang === 'zh-CN'
+          ? (C + ' / ' + all.length + ' 高频物种')
+          : (C + ' most-heard of ' + all.length)) + '</div>'
       : '';
     tl.innerHTML =
       '<div class="stats-tl-yaxis">' + yaxis + '</div>'
@@ -866,10 +1230,10 @@
     var week_det = (stats.week && stats.week.detections) || 0;
     var all_det = (stats.totals && stats.totals.detections) || 0;
     document.getElementById('statsByPeriod').innerHTML =
-        liRow('NOW',   'last hour',   fmtN(last_hour))
-      + liRow('TODAY', 'today',       fmtN(today_det))
-      + liRow('WEEK',  'last 7 days', fmtN(week_det))
-      + liRow('ALL',   'all time',    fmtN(all_det));
+        liRow(tr('nowTag'),   tr('lastHour'),  fmtN(last_hour))
+      + liRow(tr('todayTag'), tr('today'),     fmtN(today_det))
+      + liRow(tr('weekTag'),  tr('last7Days'), fmtN(week_det))
+      + liRow(tr('allTag'),   tr('allTime'),   fmtN(all_det));
 
     // Top Species - top 5 species in the current window. ./avian/api/birdnet-api.php?action=recent
     // already returns species sorted by last_seen DESC; re-sort by count.
@@ -878,10 +1242,10 @@
       .sort(function (a, b) { return (+b.n) - (+a.n); })
       .slice(0, 5);
     document.getElementById('statsTopSpec').innerHTML = ranked.length
-      ? ranked.map(function (s, i) { return liRow(pad(i + 1), s.com, fmtN(+s.n), s.sci); }).join('')
-      : liRow('-', 'no detections in window', '');
+      ? ranked.map(function (s, i) { return liRow(pad(i + 1), speciesName(s), fmtN(+s.n), s.sci); }).join('')
+      : liRow('-', tr('noDetectionsWindow'), '');
     document.getElementById('statsTopSpecCap').textContent =
-      'most-heard, ' + windowLabel(currentHours);
+      tr('topSpeciesHintPrefix') + windowLabel(currentHours);
 
     // First Detections - newest additions to the life list, with a
     // "Xd ago" label computed from first_seen.
@@ -893,11 +1257,11 @@
           var label = '-';
           if (!isNaN(t)) {
             var daysAgo = Math.floor((now - t) / 86400000);
-            label = daysAgo === 0 ? 'today' : daysAgo + 'd ago';
+            label = daysAgo === 0 ? tr('todayAgo') : daysAgo + tr('daysAgo');
           }
-          return liRow(label, s.com, '', s.sci);
+          return liRow(label, speciesName(s), '', s.sci);
         }).join('')
-      : liRow('-', 'no detections yet', '');
+      : liRow('-', tr('noDetectionsYet'), '');
   }
 
   // ---- Atlas: field-guide card grid ----
@@ -944,8 +1308,8 @@
 
     if (!lifelist.length) {
       grid.innerHTML = '<div class="atlas-empty">' +
-        '<p>No birds detected yet.</p>' +
-        '<p class="hint">The atlas fills up as BirdNET-Pi identifies new species.</p>' +
+        '<p>' + esc(tr('noBirdsDetected')) + '</p>' +
+        '<p class="hint">' + esc(tr('atlasHint')) + '</p>' +
         '</div>';
       return;
     }
@@ -958,8 +1322,8 @@
       : lifelist.filter(function (s) { return (winBySci[s.sci] || 0) > 0; });
     if (!filtered.length) {
       grid.innerHTML = '<div class="atlas-empty">' +
-        '<p>No detections in this window.</p>' +
-        '<p class="hint">Try a longer time window - the lifelist is still here under ALL.</p>' +
+        '<p>' + esc(tr('noDetectionsWindowSentence')) + '</p>' +
+        '<p class="hint">' + esc(tr('atlasLongerHint')) + '</p>' +
         '</div>';
       return;
     }
@@ -976,15 +1340,17 @@
       });
     } else if (sortMode === 'alpha') {
       species.sort(function (a, b) {
-        return (a.com || a.sci || '').localeCompare(b.com || b.sci || '');
+        return speciesName(a).localeCompare(speciesName(b), currentLang === 'zh-CN' ? 'zh-CN' : undefined);
       });
     }
 
     grid.innerHTML = species.map(function (s) {
       var total = +s.total || 0;
       var win = winBySci[s.sci] || 0;
+      var comEn = speciesNameEn(s);
+      var name = speciesName(s);
       var sketchSrc = './avian/api/cutout.php?sci=' + encodeURIComponent(s.sci) +
-        (s.com ? '&com=' + encodeURIComponent(s.com) : '') +
+        (comEn ? '&com=' + encodeURIComponent(comEn) : '') +
         '&v=' + SKETCH_VERSION;
       var audioSrc = './avian/api/recording.php?sci=' + encodeURIComponent(s.sci);
       var spectroSrc = './avian/api/spectrogram.php?sci=' + encodeURIComponent(s.sci);
@@ -992,24 +1358,24 @@
       // all-time count - collapse to a single stat rather than print the
       // same number twice. Otherwise label the count with its span.
       var statRows = currentHours >= 1000000
-        ? '<div><span class="n">' + fmtN(total) + '</span><span class="lbl-inline">all time</span></div>'
-        : '<div><span class="n">' + fmtN(win) + '</span><span class="lbl-inline">' + windowLabel(currentHours) + '</span></div>'
-          + '<div><span class="n">' + fmtN(total) + '</span><span class="lbl-inline">all time</span></div>';
+        ? '<div><span class="n">' + fmtN(total) + '</span><span class="lbl-inline">' + esc(tr('allTimeShort')) + '</span></div>'
+        : '<div><span class="n">' + fmtN(win) + '</span><span class="lbl-inline">' + esc(windowLabel(currentHours)) + '</span></div>'
+          + '<div><span class="n">' + fmtN(total) + '</span><span class="lbl-inline">' + esc(tr('allTimeShort')) + '</span></div>';
       return ''
-        + '<article class="bird-card" data-sci="' + s.sci + '" data-audio="' + audioSrc + '" data-spectro="' + spectroSrc + '">'
+        + '<article class="bird-card" data-sci="' + esc(s.sci) + '" data-audio="' + esc(audioSrc) + '" data-spectro="' + esc(spectroSrc) + '">'
         +   '<div class="stat">' + statRows + '</div>'
         +   '<div class="img-wrap">'
-        +     '<img loading="lazy" decoding="async" src="' + sketchSrc + '" alt="' + s.com + '">'
+        +     '<img loading="lazy" decoding="async" src="' + esc(sketchSrc) + '" alt="' + esc(name) + '">'
         +   '</div>'
         +   '<div class="spectro-wrap" aria-hidden="true"></div>'
-        +   '<h3>' + s.com + '</h3>'
-        +   '<div class="sci">' + s.sci + '</div>'
+        +   '<h3>' + esc(name) + '</h3>'
+        +   '<div class="sci">' + esc(s.sci) + '</div>'
         +   '<div class="actions">'
-        +     '<button type="button" class="chip play" data-action="play" aria-label="play recording">'
-        +       ICON_PLAY + '<span>play</span>'
+        +     '<button type="button" class="chip play" data-action="play" aria-label="' + esc(tr('playRecording')) + '">'
+        +       ICON_PLAY + '<span>' + esc(tr('play')) + '</span>'
         +     '</button>'
-        +     '<a class="chip ext" href="' + wikiUrl(s.sci) + '" target="_blank" rel="noopener" aria-label="Wikipedia">wiki</a>'
-        +     '<a class="chip ext" href="' + ebirdUrl(s.sci) + '" target="_blank" rel="noopener" aria-label="eBird">ebird</a>'
+        +     '<a class="chip ext" href="' + esc(wikiUrl(s.sci)) + '" target="_blank" rel="noopener" aria-label="Wikipedia">' + esc(tr('wiki')) + '</a>'
+        +     '<a class="chip ext" href="' + esc(ebirdUrl(s.sci)) + '" target="_blank" rel="noopener" aria-label="eBird">' + esc(tr('ebird')) + '</a>'
         +   '</div>'
         + '</article>';
     }).join('');
@@ -1027,22 +1393,22 @@
       btn.setAttribute('data-state', state);
       if (state === 'playing') {
         btn.setAttribute('data-active', 'true');
-        btn.innerHTML = ICON_PAUSE + '<span>stop</span>';
+        btn.innerHTML = ICON_PAUSE + '<span>' + esc(tr('stop')) + '</span>';
       } else if (state === 'loading') {
         btn.setAttribute('data-active', 'true');
         btn.innerHTML = ICON_PLAY + '<span>...</span>';
       } else if (state === 'missing') {
         btn.setAttribute('data-active', 'false');
-        btn.innerHTML = ICON_PLAY + '<span>no audio</span>';
+        btn.innerHTML = ICON_PLAY + '<span>' + esc(tr('noAudio')) + '</span>';
         setTimeout(function () {
           if (btn.getAttribute('data-state') === 'missing') {
-            btn.innerHTML = ICON_PLAY + '<span>play</span>';
+            btn.innerHTML = ICON_PLAY + '<span>' + esc(tr('play')) + '</span>';
             btn.setAttribute('data-state', 'idle');
           }
         }, 2200);
       } else {
         btn.setAttribute('data-active', 'false');
-        btn.innerHTML = ICON_PLAY + '<span>play</span>';
+        btn.innerHTML = ICON_PLAY + '<span>' + esc(tr('play')) + '</span>';
       }
     }
     function clearProgressOn(card) {
@@ -1150,7 +1516,7 @@
     // lands later - we discard the stale response so the collage
     // never reverts to a different window.
     var forHours = currentHours;
-    return fetchJson('./avian/api/birdnet-api.php?action=recent&hours=' + forHours)
+    return fetchJson('./avian/api/birdnet-api.php?action=recent&hours=' + forHours + apiLangParam())
       .then(function (j) {
         if (forHours !== currentHours) return; // window changed mid-flight
         DATA.recent = j; renderWindowDependent();
@@ -1161,10 +1527,10 @@
     var forHours = currentHours;
     return Promise.all([
       fetchJson('./avian/api/birdnet-api.php?action=stats').catch(function () { return null; }),
-      fetchJson('./avian/api/birdnet-api.php?action=lifelist').catch(function () { return null; }),
+      fetchJson('./avian/api/birdnet-api.php?action=lifelist' + apiLangParam()).catch(function () { return null; }),
       fetchJson('./avian/api/birdnet-api.php?action=timeseries&days=30').catch(function () { return null; }),
-      fetchJson('./avian/api/birdnet-api.php?action=firstseen&limit=10').catch(function () { return null; }),
-      fetchJson('./avian/api/birdnet-api.php?action=recent&hours=' + forHours).catch(function () { return null; }),
+      fetchJson('./avian/api/birdnet-api.php?action=firstseen&limit=10' + apiLangParam()).catch(function () { return null; }),
+      fetchJson('./avian/api/birdnet-api.php?action=recent&hours=' + forHours + apiLangParam()).catch(function () { return null; }),
     ]).then(function (parts) {
       DATA.stats = parts[0];
       DATA.lifelist = parts[1];
@@ -1222,6 +1588,7 @@
   var locked  = document.getElementById('dd-locked');
   var items   = document.getElementById('dd-items');
   var lockHint= document.getElementById('lockHint');
+  applyStaticLanguage();
   function openDd()  { dd.classList.add('open'); dd.setAttribute('aria-hidden','false'); setTimeout(function () { document.getElementById('lockPass').focus(); }, 100); }
   function closeDd() { dd.classList.remove('open'); dd.setAttribute('aria-hidden','true'); }
   function toggleDd(){ dd.classList.contains('open') ? closeDd() : openDd(); }
@@ -1263,14 +1630,14 @@
       if (r.status === 200) {
         return r.json().then(function (j) { renderMenu(j.items || []); });
       } else if (r.status === 401) {
-        lockHint.textContent = 'wrong password.';
+        lockHint.textContent = tr('wrongPassword');
         lockHint.classList.add('lock-err');
       } else {
-        lockHint.textContent = 'auth unavailable.';
+        lockHint.textContent = tr('authUnavailable');
         lockHint.classList.add('lock-err');
       }
     }).catch(function () {
-      lockHint.textContent = 'network error.';
+      lockHint.textContent = tr('networkError');
       lockHint.classList.add('lock-err');
     });
   });
@@ -1299,9 +1666,9 @@
     items.innerHTML =
       '<div class="live-audio" id="liveAudio" data-on="false">'
       + '  <div class="pulse"></div>'
-      + '  <div class="label">Live audio<span class="hint">stream from the mic</span></div>'
+      + '  <div class="label">' + esc(tr('liveAudio')) + '<span class="hint">' + esc(tr('streamFromMic')) + '</span></div>'
       + '  <button type="button" id="liveAudioBtn">'
-      +     liveAudioIcon + '<span>listen</span>'
+      +     liveAudioIcon + '<span>' + esc(tr('listen')) + '</span>'
       + '  </button>'
       + '</div>'
       // Spectrogram canvas is always present; it stays a dark inert
@@ -1346,7 +1713,7 @@
         liveEl.addEventListener('error', function () {
           if (settled) return;
           settled = true;
-          reject(new Error('stream error - check /#admin=system'));
+          reject(new Error(tr('streamErrorCheckSystem')));
         });
         liveEl.play().catch(function (e) {
           if (settled) return;
@@ -1360,7 +1727,7 @@
       if (srcNode) { try { srcNode.disconnect(); } catch (e) {} srcNode = null; }
       if (analyser) { try { analyser.disconnect(); } catch (e) {} analyser = null; }
       liveBox.setAttribute('data-on', 'false');
-      liveBtn.innerHTML = liveAudioIcon + '<span>listen</span>';
+      liveBtn.innerHTML = liveAudioIcon + '<span>' + esc(tr('listen')) + '</span>';
       // Clear the spectrogram canvas so it returns to its quiet state.
       var ctx = spectroEl.getContext('2d');
       ctx.fillStyle = getComputedStyle(document.documentElement)
@@ -1443,15 +1810,15 @@
       var on = liveBox.getAttribute('data-on') === 'true';
       if (on) { setStatus(''); stopAudio(); return; }
       liveBox.setAttribute('data-on', 'true');
-      liveBtn.innerHTML = stopIcon + '<span>stop</span>';
-      setStatus('connecting...');
+      liveBtn.innerHTML = stopIcon + '<span>' + esc(tr('stop')) + '</span>';
+      setStatus(tr('connecting'));
       startAudio()
-        .then(function () { setStatus('streaming from pi'); attachSpectrogram(); })
+        .then(function () { setStatus(tr('streamingFromPi')); attachSpectrogram(); })
         .catch(function (err) {
           stopAudio();
-          var msg = (err && err.message) || 'stream unavailable';
+          var msg = (err && err.message) || tr('streamUnavailable');
           if (msg.indexOf('NotAllowed') !== -1 || msg.indexOf('user') !== -1) {
-            setStatus('browser blocked autoplay - tap listen again', true);
+            setStatus(tr('autoplayBlocked'), true);
           } else {
             setStatus(msg, true);
           }
@@ -1476,17 +1843,17 @@
         var v = cfg.values || {};
         var preserve = cfg.preserve;
         var html = ''
-          + settingsToggle('preserve', 'Preserve all recordings', "don't auto-delete", preserve)
-          + settingsSlider('CONFIDENCE',  'Confidence threshold', 'min score to log a detection', v.CONFIDENCE,  0.1, 0.95, 0.05, 2)
-          + settingsSlider('SENSITIVITY', 'Sensitivity',          'analyzer sensitivity',          v.SENSITIVITY, 0.5, 1.5,  0.05, 2)
-          + settingsSlider('OVERLAP',     'Chunk overlap',        'seconds analyzed per pass',     v.OVERLAP,     0,   2.5,  0.1,  1)
-          + settingsSegmented('FULL_DISK', 'When disk fills', '', v.FULL_DISK, [
-              { v: 'keep',  label: 'keep' },
-              { v: 'purge', label: 'purge' },
+          + settingsToggle('preserve', tr('preserveAllRecordings'), tr('dontAutoDelete'), preserve)
+          + settingsSlider('CONFIDENCE',  tr('confidenceThreshold'), tr('minScoreDetection'),  v.CONFIDENCE,  0.1, 0.95, 0.05, 2)
+          + settingsSlider('SENSITIVITY', tr('sensitivity'),         tr('analyzerSensitivity'), v.SENSITIVITY, 0.5, 1.5,  0.05, 2)
+          + settingsSlider('OVERLAP',     tr('chunkOverlap'),        tr('secondsAnalyzed'),     v.OVERLAP,     0,   2.5,  0.1,  1)
+          + settingsSegmented('FULL_DISK', tr('whenDiskFills'), '', v.FULL_DISK, [
+              { v: 'keep',  label: tr('keep') },
+              { v: 'purge', label: tr('purge') },
             ])
           + '<div class="menu-save-row">'
           + '  <span class="save-state" id="saveState"></span>'
-          + '  <button type="button" id="saveBtn" disabled>save</button>'
+          + '  <button type="button" id="saveBtn" disabled>' + esc(tr('save')) + '</button>'
           + '</div>';
         var body = document.getElementById('settingsBody');
         if (body) body.innerHTML = html;
@@ -1504,8 +1871,8 @@
   function settingsToggle(key, label, hint, on) {
     return ''
       + '<div class="menu-row">'
-      + '  <div><span class="label">' + label + '</span>'
-      +     (hint ? '<span class="hint">' + hint + '</span>' : '')
+      + '  <div><span class="label">' + esc(label) + '</span>'
+      +     (hint ? '<span class="hint">' + esc(hint) + '</span>' : '')
       + '  </div>'
       + '  <button type="button" class="switch" role="switch" aria-checked="' + (on ? 'true' : 'false') + '" data-key="' + key + '"></button>'
       + '</div>';
@@ -1515,8 +1882,8 @@
       + '<div class="slider-row">'
       + '  <div class="head">'
       + '    <div class="label-block">'
-      + '      <span class="label">' + label + '</span>'
-      +       (hint ? '<span class="hint">' + hint + '</span>' : '')
+      + '      <span class="label">' + esc(label) + '</span>'
+      +       (hint ? '<span class="hint">' + esc(hint) + '</span>' : '')
       + '    </div>'
       + '    <span class="value" data-value-for="' + key + '">' + (+val).toFixed(digits) + '</span>'
       + '  </div>'
@@ -1527,14 +1894,14 @@
   }
   function settingsSegmented(key, label, hint, val, opts) {
     var btns = opts.map(function (o) {
-      return '<button type="button" data-v="' + o.v + '" aria-current="' + (o.v === val ? 'true' : 'false') + '">' + o.label + '</button>';
+      return '<button type="button" data-v="' + esc(o.v) + '" aria-current="' + (o.v === val ? 'true' : 'false') + '">' + esc(o.label) + '</button>';
     }).join('');
     return ''
       + '<div class="menu-row">'
-      + '  <div><span class="label">' + label + '</span>'
-      +     (hint ? '<span class="hint">' + hint + '</span>' : '')
+      + '  <div><span class="label">' + esc(label) + '</span>'
+      +     (hint ? '<span class="hint">' + esc(hint) + '</span>' : '')
       + '  </div>'
-      + '  <div class="seg" data-key="' + key + '">' + btns + '</div>'
+      + '  <div class="seg" data-key="' + esc(key) + '">' + btns + '</div>'
       + '</div>';
   }
   function wireSettingsControls(scope) {
@@ -1544,7 +1911,7 @@
         var on = sw.getAttribute('aria-checked') !== 'true';
         sw.setAttribute('aria-checked', on ? 'true' : 'false');
         pending[sw.dataset.key] = on;
-        setSaveState('change pending');
+        setSaveState(tr('changePending'));
       });
     });
     scope.querySelectorAll('input[type="range"]').forEach(function (sl) {
@@ -1554,7 +1921,7 @@
         var label = scope.querySelector('[data-value-for="' + sl.dataset.key + '"]');
         if (label) label.textContent = v.toFixed(digits);
         pending[sl.dataset.key] = v;
-        setSaveState('change pending');
+        setSaveState(tr('changePending'));
       });
     });
     scope.querySelectorAll('.seg').forEach(function (seg) {
@@ -1562,7 +1929,7 @@
         b.addEventListener('click', function () {
           seg.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-current', x === b ? 'true' : 'false'); });
           pending[seg.dataset.key] = b.dataset.v;
-          setSaveState('change pending');
+          setSaveState(tr('changePending'));
         });
       });
     });
@@ -1571,7 +1938,7 @@
   function saveSettings() {
     if (Object.keys(pending).length === 0) return;
     var body = JSON.stringify(pending);
-    setSaveState('saving...');
+    setSaveState(tr('saving'));
     fetch('./avian/api/config.php', {
       method: 'POST', body: body,
       credentials: 'same-origin',
@@ -1581,13 +1948,13 @@
       .then(function (res) {
         if (res.ok && res.j.ok) {
           pending = {};
-          setSaveState('saved ✓', 'ok');
+          setSaveState(tr('saved'), 'ok');
           setTimeout(function () { setSaveState(''); }, 1800);
         } else {
-          setSaveState('save failed', 'err');
+          setSaveState(tr('saveFailed'), 'err');
         }
       })
-      .catch(function () { setSaveState('network error', 'err'); });
+      .catch(function () { setSaveState(tr('networkError'), 'err'); });
   }
 
   // ---- Hash routing + atlas detail modal ----
@@ -1636,16 +2003,16 @@
     if (isNaN(date.getTime())) return d + ' ' + (t || '');
     var now = Date.now();
     var ago = Math.floor((now - date.getTime()) / 1000);
-    if (ago < 60) return ago + 's ago';
-    if (ago < 3600) return Math.floor(ago / 60) + 'm ago';
-    if (ago < 86400) return Math.floor(ago / 3600) + 'h ago';
-    return Math.floor(ago / 86400) + 'd ago';
+    if (ago < 60) return fmtAgo(ago, 'secAgo');
+    if (ago < 3600) return fmtAgo(Math.floor(ago / 60), 'minAgo');
+    if (ago < 86400) return fmtAgo(Math.floor(ago / 3600), 'hourAgo');
+    return fmtAgo(Math.floor(ago / 86400), 'daysAgo');
   }
   function fmtDateLine(d, t) {
     if (!d) return '';
     try {
       var date = new Date(d + 'T' + (t || '00:00:00'));
-      return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) +
+      return date.toLocaleDateString(currentLang === 'zh-CN' ? 'zh-CN' : undefined, { month: 'short', day: 'numeric' }) +
         ' · ' + (t ? t.slice(0, 5) : '');
     } catch (e) { return d + ' ' + (t || ''); }
   }
@@ -1657,10 +2024,10 @@
       if (!isNaN(t)) days = Math.max(1, Math.ceil((Date.now() - t) / 86400000));
     }
     var perDay = total / days;
-    if (perDay >= 5) return 'common';
-    if (perDay >= 1) return 'regular';
-    if (perDay >= 0.2) return 'occasional';
-    return 'rare';
+    if (perDay >= 5) return tr('common');
+    if (perDay >= 1) return tr('regular');
+    if (perDay >= 0.2) return tr('occasional');
+    return tr('rare');
   }
   // rAF-driven cursor smoothing. timeupdate fires ~4Hz which feels
   // janky; we sample audio.currentTime every animation frame and
@@ -1727,7 +2094,7 @@
     // Gemini prompt is right for a never-pre-rendered species.
     var sp = ((DATA.lifelist && DATA.lifelist.species) || [])
       .find(function (s) { return s.sci === sci; });
-    var com = sp ? (sp.com || '') : '';
+    var com = sp ? speciesNameEn(sp) : '';
     var base = './avian/api/cutout.php?sci=' + encodeURIComponent(sci) +
       (com ? '&com=' + encodeURIComponent(com) : '') +
       '&v=' + SKETCH_VERSION;
@@ -1806,9 +2173,9 @@
     document.getElementById('modalFirstSeen').textContent = '-';
     document.getElementById('modalRarity').textContent = '-';
     document.getElementById('modalRarity').classList.remove('rare');
-    document.getElementById('modalDesc').textContent = 'Loading description...';
+    document.getElementById('modalDesc').textContent = tr('loadingDescription');
     document.getElementById('modalDesc').classList.add('placeholder');
-    document.getElementById('modalRecordings').innerHTML = '<li class="rec-empty">Loading recordings...</li>';
+    document.getElementById('modalRecordings').innerHTML = '<li class="rec-empty">' + esc(tr('loadingRecordings')) + '</li>';
     document.getElementById('modalRecCount').textContent = '';
     document.getElementById('modalWiki').href = wikiUrl(sci);
     document.getElementById('modalEbird').href = ebirdUrl(sci);
@@ -1827,15 +2194,16 @@
     morphModalOpen(modal.querySelector('.modal-card'), sourceCard);
 
     // Species detail (lifelist row + every detection).
-    var loadSpecies = SPECIES_CACHE[sci]
-      ? Promise.resolve(SPECIES_CACHE[sci])
-      : fetchJson('./avian/api/birdnet-api.php?action=species&sci=' + encodeURIComponent(sci)).then(function (j) {
-          SPECIES_CACHE[sci] = j;
+    var speciesCacheKey = currentLang + '|' + sci;
+    var loadSpecies = SPECIES_CACHE[speciesCacheKey]
+      ? Promise.resolve(SPECIES_CACHE[speciesCacheKey])
+      : fetchJson('./avian/api/birdnet-api.php?action=species&sci=' + encodeURIComponent(sci) + apiLangParam()).then(function (j) {
+          SPECIES_CACHE[speciesCacheKey] = j;
           return j;
         });
     loadSpecies.then(function (j) {
       var s = j.summary || {};
-      document.getElementById('modalCommon').textContent = s.com || sci;
+      document.getElementById('modalCommon').textContent = speciesName({ sci: sci, com: s.com, com_en: s.com_en });
       document.getElementById('modalAllTime').textContent = fmtN(+s.total || 0);
       var winRow = ((DATA.recent && DATA.recent.species) || []).filter(function (x) { return x.sci === sci; })[0];
       document.getElementById('modalWindow').textContent = fmtN(winRow ? +winRow.n : 0);
@@ -1843,26 +2211,26 @@
       var rar = rarityLabel(+s.total || 0, s.first_seen);
       var rarEl = document.getElementById('modalRarity');
       rarEl.textContent = rar;
-      if (rar === 'rare') rarEl.classList.add('rare');
+      if (rar === tr('rare')) rarEl.classList.add('rare');
       var dets = j.detections || [];
-      document.getElementById('modalRecCount').textContent = dets.length + ' captured';
+      document.getElementById('modalRecCount').textContent = dets.length + tr('captured');
       document.getElementById('modalRecordings').innerHTML = dets.length
         ? dets.map(function (d) {
-            return '<li class="rec-row" data-file="' + (d.file || '') + '" data-date="' + (d.d || '') + '">'
-              + '<button class="play" type="button" aria-label="play">' + ICON_PLAY + '</button>'
+            return '<li class="rec-row" data-file="' + esc(d.file || '') + '" data-date="' + esc(d.d || '') + '">'
+              + '<button class="play" type="button" aria-label="' + esc(tr('play')) + '">' + ICON_PLAY + '</button>'
               + '<span class="when">' + fmtRecTime(d.d, d.t) + '<small>' + fmtDateLine(d.d, d.t) + '</small></span>'
               + '<span class="conf">' + ((+d.conf || 0) * 100).toFixed(0) + '%</span>'
               + '<div class="rec-spectro" aria-hidden="true">'
-              +   '<div class="rec-spectro-loading">loading spectrogram...</div>'
+              +   '<div class="rec-spectro-loading">' + esc(tr('loadingSpectrogram')) + '</div>'
               +   '<div class="rec-spectro-played"></div>'
               +   '<div class="rec-spectro-cursor"></div>'
-              +   '<div class="rec-spectro-scrub" role="slider" aria-label="scrub" tabindex="0"></div>'
+              +   '<div class="rec-spectro-scrub" role="slider" aria-label="' + esc(tr('scrub')) + '" tabindex="0"></div>'
               + '</div>'
               + '</li>';
           }).join('')
-        : '<li class="rec-empty">No recordings yet.</li>';
+        : '<li class="rec-empty">' + esc(tr('noRecordings')) + '</li>';
     }).catch(function () {
-      document.getElementById('modalRecordings').innerHTML = '<li class="rec-empty">Failed to load recordings.</li>';
+      document.getElementById('modalRecordings').innerHTML = '<li class="rec-empty">' + esc(tr('failedRecordings')) + '</li>';
     });
 
     // Wikipedia summary (description + genus / family).
@@ -1873,11 +2241,11 @@
         });
     loadWiki.then(function (j) {
       var desc = document.getElementById('modalDesc');
-      desc.textContent = j.extract || 'No description available.';
+      desc.textContent = j.extract || tr('noDescription');
       desc.classList.toggle('placeholder', !j.extract);
     }).catch(function () {
       var desc = document.getElementById('modalDesc');
-      desc.textContent = 'No description available.';
+      desc.textContent = tr('noDescription');
       desc.classList.add('placeholder');
     });
   }
@@ -2065,7 +2433,7 @@
   }
 
   function renderAdminSettings() {
-    adminBody.innerHTML = '<p style="font:11px ui-monospace,monospace;color:var(--ink-soft);text-align:center">loading settings...</p>';
+    adminBody.innerHTML = '<p style="font:11px ui-monospace,monospace;color:var(--ink-soft);text-align:center">' + esc(tr('loadingSettings')) + '</p>';
     fetch('./avian/api/config.php', { credentials: 'same-origin', cache: 'no-store' })
       .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
       .then(function (cfg) {
@@ -2073,17 +2441,17 @@
         var preserve = cfg.preserve;
         adminBody.innerHTML =
           '<div class="admin-settings">'
-          + settingsToggle('preserve', 'Preserve all recordings', "don't auto-delete", preserve)
-          + settingsSlider('CONFIDENCE',  'Confidence threshold', 'min score to log a detection', v.CONFIDENCE,  0.1, 0.95, 0.05, 2)
-          + settingsSlider('SENSITIVITY', 'Sensitivity',          'analyzer sensitivity',          v.SENSITIVITY, 0.5, 1.5,  0.05, 2)
-          + settingsSlider('OVERLAP',     'Chunk overlap',        'seconds analyzed per pass',     v.OVERLAP,     0,   2.5,  0.1,  1)
-          + settingsSegmented('FULL_DISK', 'When disk fills', '', v.FULL_DISK, [
-              { v: 'keep',  label: 'keep' },
-              { v: 'purge', label: 'purge' },
+          + settingsToggle('preserve', tr('preserveAllRecordings'), tr('dontAutoDelete'), preserve)
+          + settingsSlider('CONFIDENCE',  tr('confidenceThreshold'), tr('minScoreDetection'),  v.CONFIDENCE,  0.1, 0.95, 0.05, 2)
+          + settingsSlider('SENSITIVITY', tr('sensitivity'),         tr('analyzerSensitivity'), v.SENSITIVITY, 0.5, 1.5,  0.05, 2)
+          + settingsSlider('OVERLAP',     tr('chunkOverlap'),        tr('secondsAnalyzed'),     v.OVERLAP,     0,   2.5,  0.1,  1)
+          + settingsSegmented('FULL_DISK', tr('whenDiskFills'), '', v.FULL_DISK, [
+              { v: 'keep',  label: tr('keep') },
+              { v: 'purge', label: tr('purge') },
             ])
           + '<div class="menu-save-row">'
           + '  <span class="save-state" id="saveState"></span>'
-          + '  <button type="button" id="saveBtn" disabled>save</button>'
+          + '  <button type="button" id="saveBtn" disabled>' + esc(tr('save')) + '</button>'
           + '</div>'
           + '</div>';
         wireSettingsControls(adminBody);
@@ -2567,7 +2935,7 @@
     }
     if (loadingEl) {
       loadingEl.style.display = '';
-      loadingEl.textContent = 'rendering spectrogram...';
+      loadingEl.textContent = tr('renderingSpectrogram');
     }
 
     function done() {
@@ -2576,7 +2944,7 @@
     function fail(reason) {
       if (loadingEl) {
         loadingEl.style.display = '';
-        loadingEl.textContent = reason || 'spectrogram unavailable';
+        loadingEl.textContent = reason || tr('spectrogramUnavailable');
       }
     }
 
@@ -2586,7 +2954,7 @@
       return;
     }
     var ctx = getSpecCtx();
-    if (!ctx) { fail('WebAudio not available'); return; }
+    if (!ctx) { fail(tr('webAudioUnavailable')); return; }
     fetch('./avian/api/recording.php?file=' + encodeURIComponent(file))
       .then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -2599,7 +2967,7 @@
         done();
       })
       .catch(function (e) {
-        fail('spectrogram failed: ' + (e && e.message ? e.message : ''));
+        fail(tr('spectrogramFailedPrefix') + (e && e.message ? e.message : ''));
       });
   }
 

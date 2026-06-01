@@ -24,7 +24,7 @@ COPY scripts /srv/app/scripts
 COPY model/BirdNET_GLOBAL_6K_V2.4_Model_FP16.tflite /srv/app/model/BirdNET_GLOBAL_6K_V2.4_Model_FP16.tflite
 COPY model/BirdNET_GLOBAL_6K_V2.4_Model_FP16_Labels.txt /srv/app/model/BirdNET_GLOBAL_6K_V2.4_Model_FP16_Labels.txt
 COPY model/BirdNET_GLOBAL_6K_V2.4_MData_Model_FP16.tflite /srv/app/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_FP16.tflite
-COPY model/l18n/labels_en.json /srv/app/model/l18n/labels_en.json
+COPY model/l18n /srv/app/model/l18n
 COPY docker/birdnet.conf /docker-defaults/birdnet.conf
 COPY docker/app/nginx.conf /etc/nginx/conf.d/default.conf
 COPY docker/app/entrypoint.sh /usr/local/bin/avian-app-entrypoint

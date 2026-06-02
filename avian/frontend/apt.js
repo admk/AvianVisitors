@@ -1999,7 +1999,19 @@
   // re-fetch. Wikipedia + per-species endpoints are slow over the
   // tunnel; one fetch per session is plenty.
   var SPECIES_CACHE = {};
-  var WIKI_CACHE = {};
+  var DESCRIPTION_STORE = null;
+  var DESCRIPTION_STORE_PROMISE = null;
+  function loadDescriptionStore() {
+    if (DESCRIPTION_STORE) return Promise.resolve(DESCRIPTION_STORE);
+    if (!DESCRIPTION_STORE_PROMISE) {
+      DESCRIPTION_STORE_PROMISE = fetchJson('./avian/assets/data/species-descriptions.json')
+        .then(function (j) {
+          DESCRIPTION_STORE = (j && j.species) || {};
+          return DESCRIPTION_STORE;
+        });
+    }
+    return DESCRIPTION_STORE_PROMISE;
+  }
   var modalAudio = null;
   var modalRecBtn = null;
   function fmtRecTime(d, t) {
@@ -2239,13 +2251,9 @@
       document.getElementById('modalRecordings').innerHTML = '<li class="rec-empty">' + esc(tr('failedRecordings')) + '</li>';
     });
 
-    // Wikipedia summary (description + genus / family).
-    var loadWiki = WIKI_CACHE[sci]
-      ? Promise.resolve(WIKI_CACHE[sci])
-      : fetchJson('./avian/api/wiki.php?sci=' + encodeURIComponent(sci)).then(function (j) {
-          WIKI_CACHE[sci] = j; return j;
-        });
-    loadWiki.then(function (j) {
+    // Local Wikipedia summary, pre-fetched into avian/assets/data.
+    loadDescriptionStore().then(function (store) {
+      var j = store[sci] || {};
       var desc = document.getElementById('modalDesc');
       desc.textContent = j.extract || tr('noDescription');
       desc.classList.toggle('placeholder', !j.extract);

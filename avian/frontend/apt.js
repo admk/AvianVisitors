@@ -490,6 +490,11 @@
       writeLS('bird:lang', currentLang);
       applyStaticLanguage();
       refreshAll();
+      var detail = document.getElementById('detail-modal');
+      var openSci = detail && detail.getAttribute('aria-hidden') === 'false'
+        ? (document.getElementById('modalSci').textContent || '').trim()
+        : '';
+      if (openSci) renderModalDescription(openSci);
     });
   }
   // The buttons size from text content; wait for fonts so width is correct.
@@ -2012,6 +2017,25 @@
     }
     return DESCRIPTION_STORE_PROMISE;
   }
+  function localizedDescription(entry) {
+    if (!entry) return {};
+    if (currentLang === 'zh-CN' && entry.i18n && entry.i18n['zh-CN']) {
+      return entry.i18n['zh-CN'];
+    }
+    return entry;
+  }
+  function renderModalDescription(sci) {
+    loadDescriptionStore().then(function (store) {
+      var j = localizedDescription(store[sci]);
+      var desc = document.getElementById('modalDesc');
+      desc.textContent = j.extract || tr('noDescription');
+      desc.classList.toggle('placeholder', !j.extract);
+    }).catch(function () {
+      var desc = document.getElementById('modalDesc');
+      desc.textContent = tr('noDescription');
+      desc.classList.add('placeholder');
+    });
+  }
   var modalAudio = null;
   var modalRecBtn = null;
   function fmtRecTime(d, t) {
@@ -2252,16 +2276,7 @@
     });
 
     // Local Wikipedia summary, pre-fetched into avian/assets/data.
-    loadDescriptionStore().then(function (store) {
-      var j = store[sci] || {};
-      var desc = document.getElementById('modalDesc');
-      desc.textContent = j.extract || tr('noDescription');
-      desc.classList.toggle('placeholder', !j.extract);
-    }).catch(function () {
-      var desc = document.getElementById('modalDesc');
-      desc.textContent = tr('noDescription');
-      desc.classList.add('placeholder');
-    });
+    renderModalDescription(sci);
   }
   function closeDetailModal() {
     var modal = document.getElementById('detail-modal');

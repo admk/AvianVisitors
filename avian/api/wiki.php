@@ -22,6 +22,15 @@ if (!preg_match('/^[A-Za-z]{2,40}(?:[ ][a-z]{2,40}){1,3}$/', $sci)) {
     exit;
 }
 
+function normalized_lang(): string {
+    $raw = (string)($_GET['lang'] ?? $_GET['locale'] ?? '');
+    $raw = str_replace('_', '-', strtolower(trim($raw)));
+    if ($raw === 'zh' || $raw === 'zh-cn' || strpos($raw, 'zh-hans') === 0 || $raw === 'zh-sg') {
+        return 'zh-CN';
+    }
+    return 'en';
+}
+
 $storePath = dirname(__DIR__) . '/assets/data/species-descriptions.json';
 $raw = is_file($storePath) ? file_get_contents($storePath) : false;
 if ($raw === false) {
@@ -37,11 +46,16 @@ if (!is_array($store) || !isset($store['species']) || !is_array($store['species'
 
 $j = $store['species'][$sci] ?? null;
 if (!is_array($j)) $j = [];
+$lang = normalized_lang();
+$localized = $lang !== 'en' && isset($j['i18n'][$lang]) && is_array($j['i18n'][$lang])
+    ? $j['i18n'][$lang]
+    : $j;
 
 echo json_encode([
-    'extract'   => $j['extract'] ?? null,
+    'extract'   => $localized['extract'] ?? null,
     'thumbnail' => $j['thumbnail'] ?? null,
-    'title'     => $j['title'] ?? null,
+    'title'     => $localized['title'] ?? ($j['title'] ?? null),
     'source'    => $j['source'] ?? null,
+    'lang'      => $lang,
     'local'     => true,
 ]);

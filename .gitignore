@@ -53,3 +53,5 @@ include_species_list.txt
 whitelist_species_list.txt
 /nbproject/private/
 .DS_Store
+avian/assets/illustrations/gemini
+output/
